@@ -1,79 +1,69 @@
-import React, { useState, useEffect } from "react";
-import socketIOClient from "socket.io-client";
+import React, { useState, useEffect, useContext } from "react";
 import myCookie from "react-cookies";
-import { getRemoteProduct } from "../store/action";
-import {
-  increasePrice,
-  showLatest,
-  greeting,
-  updateLastPrice,
-  deleteProduct,
-} from "../store/AddProductReducer";
-import { useSelector, useDispatch } from "react-redux";
+import superAgent from "superagent";
+import socketIOClient from "socket.io-client";
+import { BiddingContext } from "../contaxt/biddingContext";
 const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
 function CarNameSpace() {
+  const socket = socketIOClient(ENDPOINT);
+  const {
+    product,
+    setProduct,
+    timer,
+    setTimer,
+    lastPrice,
+    setLastPrice,
+    greeting,
+    setGreeting,
+  } = useContext(BiddingContext);
+
   useEffect(() => {
-    dispatch(getRemoteProduct());
-    // dispatch(updateLastPrice(parseInt(state.myProduct.startingPrice)));
+    superAgent
+      .get(ENDPOINT)
+      .set(`Authorization`, `Bearer ${myCookie.load("token")}`)
+      .then((data) => {
+        setProduct(data.body.data);
+        setTimer(data.body.data.timer);
+        setLastPrice(data.body.data.startingPrice);
+      })
+      .catch((e) => console.log(e));
   }, []);
 
-  const socket = socketIOClient(ENDPOINT);
   socket.emit("newUser", { token: myCookie.load("token") });
-
-  const dispatch = useDispatch();
-
-  const state = useSelector((state) => {
-    return {
-      myProduct: state.addProductReducer.product,
-      lastPrice: state.addProductReducer.lastPrice,
-      greeting: state.addProductReducer.newUser,
-      showLatest: state.addProductReducer.showLatest,
-      lastUser: state.addProductReducer.lastUser,
-    };
+  socket.on("greeting", (data) => {
+    setGreeting(data);
   });
 
-  const handleStartBidding = () => {
-    // console.log(typeof state.myProduct.timer)
+  const handelClick = () => {
+    console.log('inside start bidding')
     socket.emit("startBidding", {
-      counter: state.myProduct.timer,
-      lastPrice: parseInt(state.myProduct.startingPrice),
-      text: state.lastUser,
+      counter: 15,
+      lastPrice: product.startingPrice,
+      text: myCookie.load("token"),
     });
   };
 
-  socket.on("greeting", (data) => {
-    dispatch(greeting(data));
-  });
-
   const addMoneyHandler = (e) => {
-    dispatch(increasePrice(parseInt(e.target.value)));
+    console.log('inside Money Handler')
+    const x = lastPrice + parseInt(e.target.value);
+    setLastPrice(x);
     socket.emit("increasePrice", {
-      lastPrice: state.lastPrice,
+      lastPrice: lastPrice,
       token: myCookie.load("token"),
     });
   };
 
-  socket.on("showLatest", (total) => {
-    dispatch(updateLastPrice(total.total));
+  // socket.on("liveBid", (latest) => {
+  //   if (latest === 0 || latest === null) {
+  //     // latest = lastPrice;
+  //     null;
+  //   } else {
+  //     setLastPrice(data);
+  //   }
+  // });
 
-    dispatch(showLatest(total));
-
-    // window.setInterval(function () {
-    //   var elem = document.getElementById("bidding");
-    //   elem.scrollTop = elem.scrollHeight;
-    // }, 0);
-  });
-
-  socket.on("liveBid", (latest) => {
-    if (latest === 0 || latest === null) {
-      // latest = lastPrice;
-      null;
-    } else {
-      dispatch(updateLastPrice(latest));
-    }
-  });
-
+  
   function format(time) {
     // Hours, minutes and seconds
     let hrs = ~~(time / 3600);
@@ -89,16 +79,9 @@ function CarNameSpace() {
     return ret;
   }
 
+
   socket.on("liveCounter", (data) => {
-    if (data == 0) {
-      if (state.lastPrice == state.myProduct.startingPrice) {
-        console.log("not sold");
-        dispatch(deleteProduct());
-      } else {
-        console.log("Sold");
-        dispatch(deleteProduct());
-      }
-    }
+    setTimer(data);
   });
 
   // 3ebra //
@@ -111,39 +94,37 @@ function CarNameSpace() {
     }
   });
 
-  return state.myProduct ? (
+  return product ? (
     <>
-      <div id="product" class="row">
-        <h2>{state.greeting}</h2>
-        <h4>
-          {state.showLatest.name} {state.showLatest.total}
-        </h4>
-        <h5>{state.lastPrice}</h5>
-        <input id="productId" value={state.myProduct._id} type="hidden" />
-        <div class="col-4">
-          <div class="text-center">
-            <p id="endAt" class="font-weight-bold">
-              {format(state.myProduct.timer)}
+      <div id="product" className="row">
+        <h2>greeting : {greeting}</h2>
+        <h4>{/* {state.showLatest.name} {state.showLatest.total} */}</h4>
+        <h5>lastPrice : {lastPrice}</h5>
+        <input id="productId" value={product._id} type="hidden" />
+        <div className="col-4">
+          <div className="text-center">
+            <p id="endAt" className="font-weight-bold">
+              Time left {format(timer)}
             </p>
             <img
-              class="img-fluid mx-auto"
+              className="img-fluid mx-auto"
               width="400"
-              src={state.myProduct.productImage}
-              onClick={handleStartBidding}
+              src={product.productImage}
+              onClick={handelClick}
             />
             <input
               type="hidden"
-              value={state.myProduct.startingPrice}
+              value={product.startingPrice}
               id="startingPrice"
             />
-            <input type="hidden" value={state.myProduct.timer} id="timer" />
-            <p id="Description" class="font-weight-bold mt-2 text-center">
-              {state.myProduct.productDis}
+            <input type="hidden" value={product.timer} id="timer" />
+            <p id="Description" className="font-weight-bold mt-2 text-center">
+              {product.productDis}
             </p>
-            <div id="price" class="text-center">
+            <div id="price" className="text-center">
               <button
                 id="addFive"
-                class=" btn btn-primary mr-2"
+                className=" btn btn-primary mr-2"
                 value="500"
                 onClick={addMoneyHandler}
               >
@@ -151,7 +132,7 @@ function CarNameSpace() {
               </button>
               <button
                 id="addTen"
-                class=" btn btn-primary mr-2"
+                className=" btn btn-primary mr-2"
                 value="1000"
                 onClick={addMoneyHandler}
               >
@@ -159,7 +140,7 @@ function CarNameSpace() {
               </button>
               <button
                 id="addTwen"
-                class=" btn btn-primary mr-2"
+                className=" btn btn-primary mr-2"
                 value="2000"
                 onClick={addMoneyHandler}
               >
