@@ -3,29 +3,32 @@ import myCookie from "react-cookies";
 import  superAgent  from "superagent";
 import socketIOClient from "socket.io-client";
 import { BiddingContext } from '../contaxt/biddingContext'
-const ENDPOINT = "http://localhost:4000/car";
+import {socket} from '../contaxt/biddingContext'
+const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
 function CarNameSpace() {
 
-  const [response, setResponse] = useState("");
-  const socket = socketIOClient(ENDPOINT);
-  console.log(socket)
-  const {product,setProduct,timer,setTimer,lastPrice,setLastPrice,greeting,setGreeting}= useContext(BiddingContext)
 
-
+  console.log('socket...................')
+  
+  const {product,setProduct,timer,setTimer,lastPrice,setLastPrice,greeting,setGreeting,showLatest,setShowLatest}= useContext(BiddingContext)
   useEffect(()=>{
     superAgent
     .get(ENDPOINT)
     .set(`Authorization`, `Bearer ${myCookie.load("token")}`)
     .then((data) => {
-      console.log(data.body,';;;;;;;;;')
+      console.log(';;;;;;;;;')
       setProduct(data.body.data);
-      setTimer(data.body.data.timer)
-      setLastPrice(data.body.data.startingPrice)
+      if(data.body.data){
+
+        setTimer(data.body.data.timer)
+        setLastPrice(data.body.data.startingPrice)
+
+      }
     })
-    .catch((e) => console.log(e));
-  }
-  ,[])
+    .catch((e) => console.log(e,'-------e'));
+  },[])
+  
 
   socket.emit("newUser", { token: myCookie.load("token") });
   socket.on("greeting", (data) => {
@@ -35,7 +38,7 @@ function CarNameSpace() {
 
     const handelClick=()=>{
       socket.emit("startBidding", { counter:15, lastPrice:product.startingPrice, text : myCookie.load("token")});
-      console.log('blaaaaa')
+      console.log('startBidding')
       
     }
 
@@ -46,15 +49,23 @@ function CarNameSpace() {
         lastPrice: lastPrice,
         token: myCookie.load("token"),
       });
+      console.log('increasePrice')
     }
+    socket.on("showLatest", (total) => {
+      setShowLatest({
+        name:total.name,
+        total:total.total
+
+      })
+    })
 
     // socket.on("liveBid", (latest) => {
-    //   if (latest === 0 || latest === null) {
+    //   // if (latest === 0 || latest === null) {
     //     // latest = lastPrice;
-    //     null;
-    //   } else {
-    //     setLastPrice(data)
-    //   }
+    //   //   null;
+    //   // } else {
+    //     setLastPrice(latest)
+    //   // }
     // });
     function format(time) {
       // Hours, minutes and seconds
@@ -91,7 +102,7 @@ function CarNameSpace() {
     <div id="product" className="row">
         <h2>greeting  :  {greeting}</h2>
         <h4>
-          {/* {state.showLatest.name} {state.showLatest.total} */}
+        showLatest : {showLatest.name} {showLatest.total}
         </h4>
         <h5>lastPrice : {lastPrice}</h5>
         <input id="productId" value={product._id} type="hidden" />
