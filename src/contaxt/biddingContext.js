@@ -1,27 +1,35 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
+import socketIOClient from "socket.io-client";
 
-export const BiddingContext=React.createContext();
+export const BiddingContext = React.createContext();
 
+const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
-function SettingsProvider (props){
-    const [product, setProduct] = useState({});
-    const[timer,setTimer]= useState(90)
-    const [lastPrice,setLastPrice]=useState(0)
-    const[greeting,setGreeting]=useState('')
-    
-    const state = {
-        product,
-		setProduct,
-        timer,
-        setTimer,
-        lastPrice,
-        setLastPrice,
-        greeting,
-        setGreeting
+export const socket = socketIOClient(ENDPOINT);
+function SettingsProvider(props) {
+  const [product, setProduct] = useState({});
+  const [timer, setTimer] = useState(90);
+  const [lastPrice, setLastPrice] = useState(0);
+  const [greeting, setGreeting] = useState("");
+  const [showLatest, setShowLatest] = useState({});
 
-    }
-    return <BiddingContext.Provider value={state}>{props.children}</BiddingContext.Provider>
-
+  const state = {
+    product,
+    setProduct,
+    timer,
+    setTimer,
+    lastPrice,
+    setLastPrice,
+    greeting,
+    setGreeting,
+    showLatest,
+    setShowLatest,
+  };
+  return (
+    <BiddingContext.Provider value={state}>
+      {props.children}
+    </BiddingContext.Provider>
+  );
 }
 
 export default SettingsProvider;

@@ -1,13 +1,17 @@
 import ReactDOM from "react-dom";
 import App from "./app";
-import SettingsProvider from './contaxt/biddingContext'
+import { BrowserRouter } from "react-router-dom";
+
+import SettingsProvider from "./contaxt/biddingContext";
 
 const MyApp = () => {
   return (
     <>
-    <SettingsProvider>
-      <App />
-      </SettingsProvider>
+      <BrowserRouter>
+        <SettingsProvider>
+          <App />
+        </SettingsProvider>{" "}
+      </BrowserRouter>
     </>
   );
 };

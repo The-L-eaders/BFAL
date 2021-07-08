@@ -1,0 +1,31 @@
+// .true {
+//   body {
+//     background-color: chocolate;
+//     color: grey;
+//   }
+// }
+
+// .false {
+//   body {
+//     background-color: grey;
+//     color: chocolate;
+//   }
+// }
+
+.RegisterForm{
+    width: 70%;
+    margin: auto;
+
+    input{
+        padding-left: 10%;
+        margin: auto;
+        display: block;
+    }
+}
+
+.RegisterModal{
+    background-color: white;
+    border: "2px solid #000";
+    box-shadow: 2;
+    padding: 10%
+}
