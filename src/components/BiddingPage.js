@@ -9,6 +9,8 @@ const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 function CarNameSpace() {
   console.log("socket...................");
 
+  console.log("socket...................");
+
   const {
     product,
     setProduct,
