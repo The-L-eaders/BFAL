@@ -8,8 +8,8 @@ import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
 import Check from "@material-ui/icons/Check";
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
+import VpnKeyIcon from "@material-ui/icons/VpnKey";
+import AddToPhotosIcon from "@material-ui/icons/AddToPhotos";
 import VideoLabelIcon from "@material-ui/icons/VideoLabel";
 import StepConnector from "@material-ui/core/StepConnector";
 import Button from "@material-ui/core/Button";
@@ -122,7 +122,7 @@ function getSteps() {
   return [
     "Login or Register",
     "Add your Product (Sellers)",
-    "Explore Our Categories !"
+    "Explore Our Categories !",
   ];
 }
 
@@ -154,7 +154,7 @@ function HomePage() {
     },
     root: {
       width: "70%",
-      margin: "auto"
+      margin: "auto",
     },
     button: {
       marginRight: theme.spacing(1),
@@ -168,43 +168,6 @@ function HomePage() {
   const [activeStep, setActiveStep] = React.useState(3);
   const steps = getSteps();
 
-  // function getSteps() {
-  //   return [
-  //     "Login or Register",
-  //     "Add your Product (Sellers)",
-  //     "Go and see our Categories !",
-  //   ];
-  // }
-
-  // function getStepContent(step) {
-  //   switch (step) {
-  //     case 0:
-  //       return `Register new account or Login if you already have one.`;
-  //     case 1:
-  //       return "You want to sell something? Simply go to (Add Product) section in your profile and fill in the information needed!";
-  //     case 2:
-  //       return `Visit all products under different categories, bid and buy products that are currently in auction by going to (Category) section!`;
-  //     default:
-  //       return "Unknown step";
-  //   }
-  // }
-
-  // const classes = useStyles();
-  // const [activeStep, setActiveStep] = React.useState(0);
-  // const steps = getSteps();
-
-  // const handleNext = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  // };
-
-  // const handleBack = () => {
-  //   setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  // };
-
-  // const handleReset = () => {
-  //   setActiveStep(0);
-  // };
-
   return (
     <>
       <div className="backGroundImg"></div>
@@ -213,13 +176,14 @@ function HomePage() {
         <Announcements />
       </SnackbarProvider>
 
-      <div className="intro">
-        <h2> Why to go to physical auction, while you can bid online ?</h2>
-        <p>
-          Bid Fast & Last, an online auction website that allow you to sell and
-          buy products reliably, in 3 easy steps ...
-        </p>
-      </div>
+      <Typography variant="h4">
+        {" "}
+        Why to go to physical auction, while you can bid online ?
+      </Typography>
+      <Typography variant="h6">
+        Bid Fast & Last, an online auction website that allow you to sell and
+        buy products reliably, in 3 easy steps ...
+      </Typography>
 
       <div className={classes.root}>
         <Stepper

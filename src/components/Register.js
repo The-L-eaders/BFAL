@@ -3,8 +3,13 @@ import superAgent from "superagent";
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { useHistory } from "react-router-dom";
+import Paper from "@material-ui/core/Paper";
+import { Typography } from "@material-ui/core";
 
 function Register() {
+  const history = useHistory();
+
   const handelSubmit = (e) => {
     e.preventDefault();
     const user = superAgent
@@ -16,61 +21,105 @@ function Register() {
       })
       .then((data) => {
         e.target.reset();
+        history.push("/login");
       })
       .catch((e) => console.log(e));
   };
 
   const useStyles = makeStyles((theme) => ({
     root: {
+      marginTop: 100,
+      marginBottom: 50,
+      display: "flex",
+      flexWrap: "wrap",
+      flexDirection: "column",
+
+      width: "60%",
+      margin: "auto",
+    },
+
+    form: {
+      marginTop: 20,
+      display: "flex",
+      flexWrap: "wrap",
+      flexDirection: "column",
       "& > *": {
-        margin: theme.spacing(1),
-        width: "25ch",
+        width: "60%",
+        margin: "auto",
       },
+    },
+    input: {
+      padding: 10,
+    },
+
+    btn: {
+      width: "30%",
+    },
+    title: {
+      textAlign: "center",
+      fontSize: "3em",
+      marginBottom: 20,
     },
   }));
 
   const classes = useStyles();
 
   return (
-    <form
-      onSubmit={handelSubmit}
-      className={classes.root}
-      noValidate
-      action="/register"
-      method="POST"
-    >
-      <TextField
-        type="text"
-        name="userName"
-        id="standard-basic"
-        label="User Name"
-        variant="outlined"
-      />
-      <TextField
-        type="password"
-        name="password"
-        id="filled-basic"
-        label="Password"
-        variant="outlined"
-      />
-      <TextField
-        type="email"
-        name="email"
-        id="filled-basic"
-        label="Email"
-        variant="outlined"
-      />
-      <TextField
-        type="date"
-        id="birthday"
-        name="birthday"
-        id="filled-basic"
-        variant="outlined"
-      />
-      <Button variant="outlined" type="submit" color="primary">
-        Register
-      </Button>
-    </form>
+    <>
+      <div className={classes.root}>
+        <Paper elevation={10}>
+          <form
+            onSubmit={handelSubmit}
+            className={classes.form}
+            noValidate
+            action="/register"
+            method="POST"
+          >
+            <Typography className={classes.title}>Registration Form</Typography>
+            <TextField
+              type="text"
+              name="userName"
+              id="standard-basic"
+              label="User Name"
+              variant="outlined"
+              className={classes.input}
+            />
+            <TextField
+              type="password"
+              name="password"
+              id="filled-basic"
+              label="Password"
+              variant="outlined"
+              className={classes.input}
+            />
+            <TextField
+              type="email"
+              name="email"
+              id="filled-basic"
+              label="Email"
+              variant="outlined"
+              className={classes.input}
+            />
+            <TextField
+              type="date"
+              id="birthday"
+              name="birthday"
+              id="filled-basic"
+              variant="outlined"
+              className={classes.input}
+            />
+            <Button
+              variant="outlined"
+              type="submit"
+              color="primary"
+              className={classes.btn}
+            >
+              Register
+            </Button>
+          </form>
+        </Paper>
+      </div>
+    </>
   );
 }
 

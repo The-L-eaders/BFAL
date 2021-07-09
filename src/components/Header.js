@@ -38,28 +38,14 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  btn: {
-    display: "block",
-    width: "40%",
-    margin: "auto",
-  },
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: "lightgrey",
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(5, 5),
-  },
   grow: {
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(),
+    marginRight: theme.spacing(1),
   },
+
+
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
@@ -84,6 +70,7 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     flexDirection: "column",
     alignItems: "center",
+
   },
   fullList: {
     width: "auto",
@@ -151,25 +138,25 @@ function Header() {
     >
       {reactCookie.load("token") ? (
         <>
-          <MenuItem onClick={handleLogout}>Logout</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          <Typography variant="button" onClick={handleLogout}>Logout</Typography>
+          <Typography variant="button" onClick={handleMenuClose}>Profile</Typography>
         </>
       ) : null}
 
       <Link to="/login">
-        <MenuItem>Login</MenuItem>
+        <Typography variant="button">Login</Typography>
       </Link>
 
       <Link to="/register">
-        <MenuItem>Register</MenuItem>
+        <Typography variant="button">Register</Typography>
       </Link>
 
       <Divider />
       <Link to="/add">
-        <MenuItem onClick={handleMenuClose}>Add Product</MenuItem>
+        <Typography variant="button" onClick={handleMenuClose}>Add Product</Typography>
       </Link>
       <Link to="/category">
-        <MenuItem onClick={handleMenuClose}>Category</MenuItem>
+        <Typography variant="button" onClick={handleMenuClose}>Category</Typography>
       </Link>
     </div>
   );
@@ -205,8 +192,8 @@ function Header() {
 
   return (
     <>
-      <div className={classes.grow}>
-        <AppBar position="static">
+      <div className={classes.grow} position="fixed">
+        <AppBar >
           <Toolbar>
             <img
               src="https://freepngimg.com/thumb/auction/22904-7-auction-transparent-image-thumb.png"
