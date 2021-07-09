@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   menuButton: {
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(),
   },
   title: {
     display: "none",
@@ -66,43 +66,7 @@ const useStyles = makeStyles((theme) => ({
       display: "block",
     },
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
+
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
@@ -116,10 +80,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   list: {
-    // display: "flex",
-    // flexWrap: 'wrap',
-    width: "50%",
-    textAlign: "center",
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+    alignItems: "center",
   },
   fullList: {
     width: "auto",
@@ -137,18 +101,13 @@ function Header() {
     right: false,
   });
 
-
-
-
   const [isDarkMode, setIsDarkMode] = useState(() => false);
-
 
   const handleLogout = () => {
     reactCookie.remove("token");
 
     handleMenuClose();
   };
-
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -190,21 +149,19 @@ function Header() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-
-      { reactCookie.load('token') ? 
-      <>
-      <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem> 
-</>
-      : null
-      }
+      {reactCookie.load("token") ? (
+        <>
+          <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+        </>
+      ) : null}
 
       <Link to="/login">
-      <MenuItem >Login</MenuItem>
+        <MenuItem>Login</MenuItem>
       </Link>
 
       <Link to="/register">
-      <MenuItem>Register</MenuItem>
+        <MenuItem>Register</MenuItem>
       </Link>
 
       <Divider />
@@ -259,26 +216,14 @@ function Header() {
             <Typography className={classes.title} variant="h6" noWrap>
               Bid Fast & Last
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
+
             <div className={classes.grow} />
-            
+
             <DarkModeToggle
               onChange={setIsDarkMode}
               checked={isDarkMode}
               size={40}
-            /> 
+            />
             <div className={classes.sectionDesktop}>
               <Link to="/" className={classes.home}>
                 <MenuItem className={`${isDarkMode}`}>

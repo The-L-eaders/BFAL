@@ -4,7 +4,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-
 function Register() {
   const handelSubmit = (e) => {
     e.preventDefault();
@@ -28,61 +27,54 @@ function Register() {
         width: "25ch",
       },
     },
-
   }));
 
   const classes = useStyles();
 
-
   return (
-  
-  
-            <form
-              onSubmit={handelSubmit}
-              className={classes.root}
-              noValidate
-              action="/register"
-              method="POST"
-            >
-              <TextField
-                type="text"
-                name="userName"
-                id="standard-basic"
-                label="User Name"
-                variant="outlined"
-              />
-              <TextField
-                type="password"
-                name="password"
-                id="filled-basic"
-                label="Password"
-                variant="outlined"
-              />
-              <TextField
-                type="email"
-                name="email"
-                id="filled-basic"
-                label="Email"
-                variant="outlined"
-              />
-              <TextField
-                type="date"
-                id="birthday"
-                name="birthday"
-                id="filled-basic"
-                variant="outlined"
-              />
-              <Button variant="outlined" type="submit" color="primary">
-                Register
-              </Button>
-            </form>
-        
+    <form
+      onSubmit={handelSubmit}
+      className={classes.root}
+      noValidate
+      action="/register"
+      method="POST"
+    >
+      <TextField
+        type="text"
+        name="userName"
+        id="standard-basic"
+        label="User Name"
+        variant="outlined"
+      />
+      <TextField
+        type="password"
+        name="password"
+        id="filled-basic"
+        label="Password"
+        variant="outlined"
+      />
+      <TextField
+        type="email"
+        name="email"
+        id="filled-basic"
+        label="Email"
+        variant="outlined"
+      />
+      <TextField
+        type="date"
+        id="birthday"
+        name="birthday"
+        id="filled-basic"
+        variant="outlined"
+      />
+      <Button variant="outlined" type="submit" color="primary">
+        Register
+      </Button>
+    </form>
   );
 }
 
 export default Register;
-
-
 
 // {/* Register Modal */}
 // <div>
