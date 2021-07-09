@@ -24,11 +24,14 @@ function App() {
             <AddProduct />
           </Route>
 
+          <Route exact path="/car">
+          <CarNameSpace />
+          </Route>
+
           <Route exact path="/">
             {null}
           </Route>
         </Switch>
-        <CarNameSpace />
         <HomePage />
       </Provider>
     </main>
