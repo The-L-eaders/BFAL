@@ -29,7 +29,6 @@ const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
 
 function CarNameSpace() {
-  const [falg,setFlag] = useState(false)
   const classes = useStyles();
   const {
     product,
@@ -42,11 +41,12 @@ function CarNameSpace() {
     setGreeting,
     showLatest,
     setShowLatest,
+    totalUser ,
+    setTotalUser
   } = useContext(BiddingContext);
 
 
   useEffect(() => {
-    setFlag(true)
     superAgent
       .get(ENDPOINT)
       .set(`Authorization`, `Bearer ${myCookie.load("token")}`)
@@ -62,24 +62,24 @@ function CarNameSpace() {
   }, []);
 
 
-
+// let totalUser=[];
   socket.emit("newUser", { token: myCookie.load("token") });
+
   socket.on("greeting", (data) => {
+    if (!totalUser.includes(data)) {
+      // totalUser.push(data)
+      setTotalUser([...totalUser,data])
+    }
+    console.log(totalUser,".............");
     setGreeting(data);
   });
-//الفلاق حل مؤقت ... 
-
   const handelClick = () => {
-    console.log(falg);
-    if (falg) {
-      setFlag(false)
       socket.emit("startBidding", {
         counter: 15,
         lastPrice: product.startingPrice,
         text: myCookie.load("token"),
       });
       console.log("startBidding");
-    }
   };
 
   const addMoneyHandler = (value) => {
