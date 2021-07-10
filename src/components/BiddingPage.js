@@ -20,6 +20,7 @@ import { Dialog,
   CardActions,
   Box,
   Grid,
+  Typography
 } from '@material-ui/core'
 
 
@@ -28,12 +29,7 @@ const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
 
 function CarNameSpace() {
-  const [expanded, setExpanded] = React.useState(false);
   const [falg,setFlag] = useState(false)
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   const classes = useStyles();
   const {
     product,
@@ -71,8 +67,7 @@ function CarNameSpace() {
   socket.on("greeting", (data) => {
     setGreeting(data);
   });
-//الفلاق حل مؤقت ...لازم ال
-//  ينعمل ممن الباكيند startBidding 
+//الفلاق حل مؤقت ... 
 
   const handelClick = () => {
     console.log(falg);
@@ -87,8 +82,8 @@ function CarNameSpace() {
     }
   };
 
-  const addMoneyHandler = (e) => {
-    const x = lastPrice + parseInt(e.target.value);
+  const addMoneyHandler = (value) => {
+    const x = lastPrice + parseInt(value);
     setLastPrice(x);
     socket.emit("increasePrice", {
       lastPrice: lastPrice,
@@ -98,6 +93,8 @@ function CarNameSpace() {
   };
 
   socket.on("showLatest", (total) => {
+    console.log(total,'?????????');
+    // setLastPrice(total.total)
     setShowLatest({
       name: total.name,
       total: total.total,
@@ -105,12 +102,12 @@ function CarNameSpace() {
   });
 
   // socket.on("liveBid", (latest) => {
-  //   // if (latest === 0 || latest === null) {
-  //     // latest = lastPrice;
-  //   //   null;
-  //   // } else {
+  //   console.log(latest, lastPrice , '???????????');
+  //   if (latest === 0 || latest === null) {
+  //     latest = lastPrice;
+  //   } else {
   //     setLastPrice(latest)
-  //   // }
+  //   }
   // });
 
   function format(time) {
@@ -167,30 +164,27 @@ function CarNameSpace() {
             </p>
             <CardActions disableSpacing className={classes.buttons}>
             <Box >
-              <button variant='contained'
+              <Button variant='contained'
                 id="addFive"
                  className={classes.button}
-                value="500"
-                onClick={addMoneyHandler}
+                onClick={()=>{addMoneyHandler(500)}}
               >
                 500$
-              </button>
-              <button variant='contained'
+              </Button>
+              <Button variant='contained'
                 id="addTen"
                  className={classes.button}
-                value="1000"
-                onClick={addMoneyHandler}
+                onClick={()=>{addMoneyHandler(1000)}}
               >
                 1000$
-              </button >
-              <button variant='contained'
+              </Button >
+              <Button variant='contained'
                 id="addTwen"
                  className={classes.button}
-                value="2000"
-                onClick={addMoneyHandler}
+                onClick={()=>{addMoneyHandler(2000)}}
               >
                 2000$
-              </button >
+              </Button >
               </Box>
               </CardActions>
             </Grid>
@@ -201,78 +195,12 @@ function CarNameSpace() {
               </h4>
               <h5>lastPrice : {lastPrice}</h5>
               <input id="productId" value={product._id} type="hidden" />
-              <p className={classes.time}>  {  format(  timer)  } <Timer className={classes.timer}/> </p>
+              <Typography className={classes.time} color='secondary'>  {  format(  timer)  } <Timer className={classes.timer} color='secondary'/> </Typography>
             </Grid>
         </Grid>
         
-      </CardContent>
-      
-      {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>Method:</Typography>
-          <Typography paragraph>text description</Typography>
-          <Typography paragraph>text description</Typography>
-          <Typography paragraph>text description</Typography>
-          <Typography>text description </Typography>
         </CardContent>
-      </Collapse> */}
-    </Card>
-       {/* <div id="product" className="row">
-        <h2>greeting : {greeting}</h2>
-        <h4>
-          showLatest : {showLatest.name} {showLatest.total}
-        </h4>
-        <h5>lastPrice : {lastPrice}</h5>
-        <input id="productId" value={product._id} type="hidden" />
-        <div className="col-4">
-          <div className="text-center">
-            <p id="endAt" className="font-weight-bold">
-              Time left {format(timer)}
-            </p>
-            <img
-              className="img-fluid mx-auto"
-              width="400"
-              src={product.productImage}
-              onClick={handelClick}
-            />
-            <input
-              type="hidden"
-              value={product.startingPrice}
-              id="startingPrice"
-            />
-            <input type="hidden" value={product.timer} id="timer" />
-            <p id="Description" className="font-weight-bold mt-2 text-center">
-              {product.productDis}
-            </p>
-            <div id="price" className="text-center">
-              <button
-                id="addFive"
-                className=" btn btn-primary mr-2"
-                value="500"
-                onClick={addMoneyHandler}
-              >
-                500$
-              </button>
-              <button
-                id="addTen"
-                className=" btn btn-primary mr-2"
-                value="1000"
-                onClick={addMoneyHandler}
-              >
-                1000$
-              </button>
-              <button
-                id="addTwen"
-                className=" btn btn-primary mr-2"
-                value="2000"
-                onClick={addMoneyHandler}
-              >
-                2000$
-              </button>
-            </div>
-          </div>
-        </div>
-      </div> */}
+        </Card>
        </Then>
      </If>
      <Else>
