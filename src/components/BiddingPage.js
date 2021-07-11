@@ -3,12 +3,13 @@ import myCookie from "react-cookies";
 import { If, Then, Else } from 'react-if';
 import superAgent from "superagent";
 import { BiddingContext } from "../contaxt/biddingContext";
-import { socket } from "../contaxt/biddingContext";
 import { Link } from 'react-router-dom';
 import useStyles from "./bidComp-style";
 import Timer from "@material-ui/icons/Timer";
 import { useParams, useHistory } from "react-router-dom";
 import { CategoryHelper } from "../api/CategoryHelper";
+import socketIOClient from "socket.io-client";
+
 import {
   Dialog,
   DialogActions,
@@ -34,29 +35,8 @@ function CarNameSpace() {
   const history = useHistory();
   const { name } = useParams();
   const [categoryInfo, setCategoryInto] = useState({});
-
-  useEffect(() => {
-    if (!name) {
-      history.push("/category");
-      return;
-    }
-    CategoryHelper.getAuction(name).then((response) => {
-      // console.log(response.data)
-      response.data.data?setCategoryInto(response.data.data):setCategoryInto({});
-      setLastPrice(response.data.data.startingPrice);
-      setTimer(response.data.data.timer);
-      console.log(response.data.data.startingPrice);
-      
-      
-    }).catch((err) => {
-      setCategoryInto({
-        // message: err.response.status === 404 ? "Category not found " : "Internal server error"
-      })
-    })
-    socket.emit("newUser", { token: myCookie.load("token") });
-  }, [])
-  // console.log(categoryInfo);
-  const classes = useStyles();
+  const ENDPOINT = `https://bid-fast-and-last.herokuapp.com/${name}`;
+   const socket = socketIOClient(ENDPOINT);
   const {
     product,
     setProduct,
@@ -71,6 +51,54 @@ function CarNameSpace() {
     totalUser,
     setTotalUser
   } = useContext(BiddingContext);
+
+  useEffect(() => {
+    if (!name) {
+      history.push("/category");
+      return;
+    }
+    CategoryHelper.getAuction(name).then((response) => {
+      // console.log(response.data)
+      response.data.data ? setCategoryInto(response.data.data) : setCategoryInto({});
+      setLastPrice(response.data.data.startingPrice);
+      setTimer(response.data.data.timer);
+      console.log(response.data.data.startingPrice);
+
+
+    }).catch((err) => {
+      setCategoryInto({
+        // message: err.response.status === 404 ? "Category not found " : "Internal server error"
+      })
+    })
+    socket.emit("newUser", { token: myCookie.load("token") });
+    socket.on("greeting", (data) => {
+      if (!totalUser.includes(data)) {
+        // totalUser.push(data)
+        setTotalUser([...totalUser, data])
+      }
+      setGreeting(data);
+    });
+    socket.on("showLatest", (total) => {
+      console.log(total.total, '************');
+      // setLastPrice(total.total)
+      setShowLatest({
+        name: total.name,
+        total: total.total,
+      });
+    });
+
+    socket.on("liveBid", (latest) => {
+      console.log(latest, lastPrice, '???????????');
+      if (latest === 0 || latest === null) {
+        latest = lastPrice;
+      } else {
+        setLastPrice(latest)
+      }
+    });
+  }, [])
+  // console.log(categoryInfo);
+  const classes = useStyles();
+
 
 
   // useEffect(() => {
@@ -91,51 +119,27 @@ function CarNameSpace() {
 
   // let totalUser=[];
 
-  socket.on("greeting", (data) => {
-    if (!totalUser.includes(data)) {
-      // totalUser.push(data)
-      setTotalUser([...totalUser, data])
-    }
-    console.log(totalUser, ".............");
-    setGreeting(data);
-  });
+
   const handelClick = () => {
     socket.emit("startBidding", {
       counter: timer,
       lastPrice: categoryInfo.startingPrice,
       text: myCookie.load("token"),
     });
-    console.log(categoryInfo.startingPrice,"startBidding");
+    console.log(categoryInfo.startingPrice, "startBidding", 'how many time');
   };
 
   const addMoneyHandler = (value) => {
     const x = lastPrice + parseInt(value);
     setLastPrice(x);
-    console.log(lastPrice,'((((((');
+    console.log(lastPrice, '((((((');
     socket.emit("increasePrice", {
       lastPrice: x,
       token: myCookie.load("token"),
     });
-    console.log(lastPrice,"increasePrice");
+    console.log(lastPrice, "increasePrice");
   };
 
-  socket.on("showLatest", (total) => {
-    console.log(total.total, '************');
-    // setLastPrice(total.total)
-    setShowLatest({
-      name: total.name,
-      total: total.total,
-    });
-  });
-
-  socket.on("liveBid", (latest) => {
-    console.log(latest, lastPrice , '???????????');
-    if (latest === 0 || latest === null) {
-      latest = lastPrice;
-    } else {
-      setLastPrice(latest)
-    }
-  });
 
   function format(time) {
     // Hours, minutes and seconds

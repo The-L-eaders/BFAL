@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import socketIOClient from "socket.io-client";
+// import socketIOClient from "socket.io-client";
 
 export const BiddingContext = React.createContext();
 
-const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
+// const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
-export const socket = socketIOClient(ENDPOINT);
+// export const socket = socketIOClient(ENDPOINT);
 function SettingsProvider(props) {
   const [product, setProduct] = useState({});
   const [timer, setTimer] = useState(90);
