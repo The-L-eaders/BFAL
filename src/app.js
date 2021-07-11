@@ -8,10 +8,8 @@ import Header from "./components/Header";
 import Category from "./components/Category";
 import AddProduct from "./components/AddProduct";
 import HomePage from "./components/HomePage";
-import theme from "./theme";
 
 
-import { ThemeProvider } from "@material-ui/styles";
 
           
 
@@ -24,7 +22,6 @@ function App() {
         <Header />
 
         <Switch>
-        <ThemeProvider theme={theme}>
           <Route exact path="/category">
             <Category />
           </Route>
@@ -40,7 +37,6 @@ function App() {
           <Route exact path="/">
             {null}
           </Route>
-        </ThemeProvider>
         </Switch>
 
         <HomePage />
