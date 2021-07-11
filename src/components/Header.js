@@ -24,8 +24,8 @@ import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   image: {
-    width: 50,
-    height: 50,
+    width: 70,
+    height: 70,
   },
   home: {
     textDecoration: "none",
@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     textDecoration: "none",
+    cursor: "pointer",
   },
   title: {
     display: "none",
@@ -125,7 +126,7 @@ function Header() {
   const [isDarkMode, setIsDarkMode] = useState(() => false);
   const handleLogout = () => {
     reactCookie.remove("token");
-    history.push('/');
+    history.push("/");
     handleMenuClose();
   };
   const toggleDrawer = (anchor, open) => (event) => {
@@ -163,33 +164,42 @@ function Header() {
     >
       {reactCookie.load("token") ? (
         <>
-          <Typography variant="button" onClick={handleLogout}>
-            Logout
-          </Typography>
-          <Link to="/profile">
+          <Link to="/profile" className={classes.link}>
             <Typography variant="button" onClick={handleMenuClose}>
               Profile
             </Typography>
           </Link>
+
+          <Link to="/add" className={classes.link}>
+            <Typography variant="button" onClick={handleMenuClose}>
+              Add Product
+            </Typography>
+          </Link>
+
+          <Link to="/category" className={classes.link}>
+            <Typography variant="button" onClick={handleMenuClose}>
+              Category
+            </Typography>
+          </Link>
+
+          <Typography
+            className={classes.link}
+            variant="button"
+            onClick={handleLogout}
+          >
+            Logout
+          </Typography>
         </>
-      ) : null}
-      <Link to="/login" className={classes.link}>
-        <Typography variant="button">Login</Typography>
-      </Link>
-      <Link to="/register" className={classes.link}>
-        <Typography variant="button">Register</Typography>
-      </Link>
-      <Divider />
-      <Link to="/add" className={classes.link}>
-        <Typography variant="button" onClick={handleMenuClose}>
-          Add Product
-        </Typography>
-      </Link>
-      <Link to="/category" className={classes.link}>
-        <Typography variant="button" onClick={handleMenuClose}>
-          Category
-        </Typography>
-      </Link>
+      ) : (
+        <>
+          <Link to="/login" className={classes.link}>
+            <Typography variant="button">Login</Typography>
+          </Link>
+          <Link to="/register" className={classes.link}>
+            <Typography variant="button">Register</Typography>
+          </Link>
+        </>
+      )}
     </div>
   );
   const mobileMenuId = "primary-search-account-menu-mobile";
@@ -232,11 +242,11 @@ function Header() {
               Bid Fast & Last
             </Typography>
             <div className={classes.grow} />
-            <DarkModeToggle
+            {/* <DarkModeToggle
               onChange={setIsDarkMode}
               checked={isDarkMode}
               size={40}
-            />
+            /> */}
             <div className={classes.sectionDesktop}>
               <Link to="/" className={classes.home}>
                 <MenuItem className={`${isDarkMode}`}>

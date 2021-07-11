@@ -1,32 +1,37 @@
 import React, { useState, useEffect } from "react";
 import { CategoryHelper } from "../api/CategoryHelper";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import { useHistory } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import CardActionArea from "@material-ui/core/CardActionArea";
+// import CardActions from "@material-ui/core/CardActions";
+import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+// import Button from "@material-ui/core/Button";
+import Typography from "@material-ui/core/Typography";
 
 
 const useStyles = makeStyles((theme) => ({
+  container: {
+    marginTop: "5%",
+    display: "flex",
+    flexWrap: "wrap",
+    margin: "auto",
+    width: "70%",
+  },
   root: {
-    maxWidth: 345,
-    cursor: "pointer",
+    margin: "auto",
+    width: "40%",
   },
   media: {
-    height: 0,
-    paddingTop: "56.25%", // 16:9
+    height: 150,
   },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: "rotate(180deg)",
-  },
-  avatar: {
-    backgroundColor: "red",
+  pageTitle: {
+    marginTop: "10%",
+    margin: "auto",
+    textAlign: "center",
+    fontSize: "2em",
   },
 }));
 
@@ -36,28 +41,48 @@ export default function RecipeReviewCard() {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    CategoryHelper.list().then((response) => {
-      setCategories(response.data);
-    }).catch((err) => {
-
-    })
-  }, [])
+    CategoryHelper.list()
+      .then((response) => {
+        setCategories(response.data);
+      })
+      .catch((err) => {});
+  }, []);
 
   function handleShowCategory(name) {
     history.push(`category-products/${name}`);
     
   }
+
   return (
     <div>
-      {categories && categories.map((row, i) => {
-        return (
-          <Card key={i} className={classes.root} onClick={() => handleShowCategory(row.name)}>
-            <CardHeader
-              title={row.name}
-            />
-          </Card>
-        )
-      })}
+      <Typography className={classes.pageTitle}>
+        Categories available are car and house,
+        <br /> once you click on any of them you will see the current product in
+        the queue for that category.
+      </Typography>
+      <div className={classes.container}>
+        {categories &&
+          categories.map((row, i) => {
+            return (
+              <Card
+                key={i}
+                className={classes.root}
+                onClick={() => handleShowCategory(row.name)}
+              >
+                <CardActionArea>
+                  <CardMedia
+                    className={classes.media}
+                    image="/static/images/cards/contemplative-reptile.jpg"
+                    title="Contemplative Reptile"
+                  />
+                  <CardContent>
+                    <CardHeader title={row.name} />
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            );
+          })}
+      </div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./SASS/HomePage.scss";
 import { SnackbarProvider, useSnackbar } from "notistack";
 import PropTypes from "prop-types";
@@ -171,11 +171,10 @@ function HomePage() {
   return (
     <>
       <div className="backGroundImg"></div>
-
+      
       <SnackbarProvider maxSnack={5}>
         <Announcements />
       </SnackbarProvider>
-
       <Typography variant="h4">
         {" "}
         Why to go to physical auction, while you can bid online ?
