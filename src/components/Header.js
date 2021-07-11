@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import "./SASS/DarkMode.scss";
 import { Link } from "react-router-dom";
 import { alpha, makeStyles } from "@material-ui/core/styles";
@@ -17,14 +17,13 @@ import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
-import reactCookie from "react-cookies";
 import superAgent from "superagent";
 import TextField from "@material-ui/core/TextField";
 import Modal from "@material-ui/core/Modal";
 import Backdrop from "@material-ui/core/Backdrop";
 import Fade from "@material-ui/core/Fade";
 import DarkModeToggle from "react-dark-mode-toggle";
-import { useState } from "react";
+import GlobalState from "../contaxt/GlobalState";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -131,6 +130,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Header() {
+  const { handleLogin, handleLogout, user } = useContext(GlobalState.Context);
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -150,7 +150,7 @@ function Header() {
         password: e.target.password.value,
       })
       .then((data) => {
-        reactCookie.save("token", data.body.token);
+        handleLogin(data.body.token);
         e.target.reset();
         handleCloseLogin();
       })
@@ -177,8 +177,8 @@ function Header() {
   const [open, setOpen] = React.useState(false);
   const [openLogin, setOpenLogin] = React.useState(false);
 
-  const handleLogout = () => {
-    reactCookie.remove("token");
+  const handleLogoutUser = () => {
+    handleLogout();
 
     handleMenuClose();
   };
@@ -238,18 +238,24 @@ function Header() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <MenuItem onClick={handleLogout}>Logout</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleOpenLogin}>Login</MenuItem>
-      <MenuItem onClick={handleOpen}>Register</MenuItem>
-
-      <Divider />
-      <Link to="/add">
-        <MenuItem onClick={handleMenuClose}>Add Product</MenuItem>
-      </Link>
-      <Link to="/category">
-        <MenuItem onClick={handleMenuClose}>Category</MenuItem>
-      </Link>
+      {user.isGuestUser ? (
+        <>
+          <MenuItem onClick={handleOpenLogin}>Login</MenuItem>
+          <MenuItem onClick={handleOpen}>Register</MenuItem>
+        </>
+      ) : (
+        <>
+          <MenuItem onClick={handleLogoutUser}>Logout</MenuItem>
+          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+          <Divider />
+          <Link to="/add">
+            <MenuItem onClick={handleMenuClose}>Add Product</MenuItem>
+          </Link>
+          <Link to="/category">
+            <MenuItem onClick={handleMenuClose}>Category</MenuItem>
+          </Link>
+        </>
+      )}
     </div>
   );
 
@@ -419,12 +425,12 @@ function Header() {
               />
             </div>
             <div className={classes.grow} />
-            
+
             <DarkModeToggle
               onChange={setIsDarkMode}
               checked={isDarkMode}
               size={40}
-            /> 
+            />
             <div className={classes.sectionDesktop}>
               <Link to="/" className={classes.home}>
                 <MenuItem className={`${isDarkMode}`}>
