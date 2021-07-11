@@ -11,6 +11,12 @@ import HomePage from "./components/HomePage";
 import Profile from "./components/Profile";
 
 
+
+
+          
+
+
+
 function App() {
   return (
     <main>
@@ -29,11 +35,15 @@ function App() {
             <AddProduct />
           </Route>
 
+          <Route exact path="/car">
+          <CarNameSpace />
+          </Route>
+
           <Route exact path="/">
             {null}
           </Route>
         </Switch>
-        <CarNameSpace />
+
         <HomePage />
       </Provider>
     </main>
