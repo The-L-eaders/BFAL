@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
 import myCookie from "react-cookies";
-import { If, Then, Else} from 'react-if';
+import { If, Then, Else } from 'react-if';
 import superAgent from "superagent";
 import { BiddingContext } from "../contaxt/biddingContext";
 import { socket } from "../contaxt/biddingContext";
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useStyles from "./bidComp-style";
 import Timer from "@material-ui/icons/Timer";
-
-import { Dialog,
+import { useParams, useHistory } from "react-router-dom";
+import { CategoryHelper } from "../api/CategoryHelper";
+import {
+  Dialog,
   DialogActions,
   Button,
   DialogContent,
@@ -25,10 +27,30 @@ import { Dialog,
 
 
 
-const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
+// const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
 
 function CarNameSpace() {
+  const history = useHistory();
+  const { name } = useParams();
+  const [categoryInfo, setCategoryInto] = useState({});
+
+  useEffect(() => {
+    if (!name) {
+      history.push("/category");
+      return;
+    }
+    CategoryHelper.getAuction(name).then((response) => {
+      console.log(response.data)
+      response.data.data?setCategoryInto(response.data.data):setCategoryInto({});
+      console.log(categoryInfo);
+    }).catch((err) => {
+      setCategoryInto({
+        // message: err.response.status === 404 ? "Category not found " : "Internal server error"
+      })
+    })
+  }, [])
+  console.log(categoryInfo);
   const classes = useStyles();
   const {
     product,
@@ -41,45 +63,45 @@ function CarNameSpace() {
     setGreeting,
     showLatest,
     setShowLatest,
-    totalUser ,
+    totalUser,
     setTotalUser
   } = useContext(BiddingContext);
 
 
-  useEffect(() => {
-    superAgent
-      .get(ENDPOINT)
-      .set(`Authorization`, `Bearer ${myCookie.load("token")}`)
-      .then((data) => {
-        console.log(data.body.data,);
-        setProduct(data.body.data);
-        if (data.body.data) {
-          setTimer(data.body.data.timer);
-          setLastPrice(data.body.data.startingPrice);
-        }
-      })
-      .catch((e) => console.log(e.message, "-------e"));
-  }, []);
+  // useEffect(() => {
+  //   superAgent
+  //     .get(ENDPOINT)
+  //     .set(`Authorization`, `Bearer ${myCookie.load("token")}`)
+  //     .then((data) => {
+  //       console.log(data.body.data,);
+  //       setProduct(data.body.data);
+  //       if (data.body.data) {
+  //         setTimer(data.body.data.timer);
+  //         setLastPrice(data.body.data.startingPrice);
+  //       }
+  //     })
+  //     .catch((e) => console.log(e.message, "-------e"));
+  // }, []);
 
 
-// let totalUser=[];
+  // let totalUser=[];
   socket.emit("newUser", { token: myCookie.load("token") });
 
   socket.on("greeting", (data) => {
     if (!totalUser.includes(data)) {
       // totalUser.push(data)
-      setTotalUser([...totalUser,data])
+      setTotalUser([...totalUser, data])
     }
-    console.log(totalUser,".............");
+    console.log(totalUser, ".............");
     setGreeting(data);
   });
   const handelClick = () => {
-      socket.emit("startBidding", {
-        counter: 15,
-        lastPrice: product.startingPrice,
-        text: myCookie.load("token"),
-      });
-      console.log("startBidding");
+    socket.emit("startBidding", {
+      counter: 15,
+      lastPrice: product.startingPrice,
+      text: myCookie.load("token"),
+    });
+    console.log("startBidding");
   };
 
   const addMoneyHandler = (value) => {
@@ -93,7 +115,7 @@ function CarNameSpace() {
   };
 
   socket.on("showLatest", (total) => {
-    console.log(total,'?????????');
+    console.log(total, '?????????');
     // setLastPrice(total.total)
     setShowLatest({
       name: total.name,
@@ -138,120 +160,120 @@ function CarNameSpace() {
   //   }
   // });
 
-  return product ? (
+  return categoryInfo.category ? (
     <>
-     <If condition={timer>0}>
-    {/* {console.log(timer)} */}
-       <Then>
-       <Card className={classes.card}>
-      <CardHeader title={product.productName}/>
-      <CardContent>
-        <Grid container spacing={2}  justifyContent='space-between'>
-          <Grid item xs={12} sm={6} md={4}>
-          <img
-              width="400"
-              src={product.productImage}
-              onClick={handelClick}
-            />
-            <input
-              type="hidden"
-              value={product.startingPrice}
-              id="startingPrice"
-            />
-            <input type="hidden" value={product.timer} id="timer" />
-            <p id="Description">
-              {product.productDis}
-            </p>
-            <CardActions disableSpacing className={classes.buttons}>
-            <Box >
-              <Button variant='contained'
-                id="addFive"
-                 className={classes.button}
-                onClick={()=>{addMoneyHandler(500)}}
-              >
-                500$
-              </Button>
-              <Button variant='contained'
-                id="addTen"
-                 className={classes.button}
-                onClick={()=>{addMoneyHandler(1000)}}
-              >
-                1000$
-              </Button >
-              <Button variant='contained'
-                id="addTwen"
-                 className={classes.button}
-                onClick={()=>{addMoneyHandler(2000)}}
-              >
-                2000$
-              </Button >
-              </Box>
-              </CardActions>
-            </Grid>
-            <Grid item xs={12} sm={6} md={4}>
-              <h2>greeting : {greeting}</h2>
-              <h4>
-                showLatest : {showLatest.name} {showLatest.total}
-              </h4>
-              <h5>lastPrice : {lastPrice}</h5>
-              <input id="productId" value={product._id} type="hidden" />
-              <Typography className={classes.time} color='secondary'>  {  format(  timer)  } <Timer className={classes.timer} color='secondary'/> </Typography>
-            </Grid>
-        </Grid>
-        
-        </CardContent>
-        </Card>
-       </Then>
-     </If>
-     <Else>
-       <If condition={timer===0 }condition={ Object.keys(showLatest).length && timer===0} >
-         <Then>
-              <Dialog
+      <If condition={timer > 0}>
+        {/* {console.log(timer)} */}
+        <Then>
+          <Card className={classes.card}>
+            <CardHeader title={categoryInfo.productName} />
+            <CardContent>
+              <Grid container spacing={2} justifyContent='space-between'>
+                <Grid item xs={12} sm={6} md={4}>
+                  <img
+                    width="400"
+                    src={categoryInfo.productImage}
+                    onClick={handelClick}
+                  />
+                  <input
+                    type="hidden"
+                    value={categoryInfo.startingPrice}
+                    id="startingPrice"
+                  />
+                  <input type="hidden" value={categoryInfo.timer} id="timer" />
+                  <p id="Description">
+                    {categoryInfo.productDis}
+                  </p>
+                  <CardActions disableSpacing className={classes.buttons}>
+                    <Box >
+                      <Button variant='contained'
+                        id="addFive"
+                        className={classes.button}
+                        onClick={() => { addMoneyHandler(500) }}
+                      >
+                        500$
+                      </Button>
+                      <Button variant='contained'
+                        id="addTen"
+                        className={classes.button}
+                        onClick={() => { addMoneyHandler(1000) }}
+                      >
+                        1000$
+                      </Button >
+                      <Button variant='contained'
+                        id="addTwen"
+                        className={classes.button}
+                        onClick={() => { addMoneyHandler(2000) }}
+                      >
+                        2000$
+                      </Button >
+                    </Box>
+                  </CardActions>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                  <h2>greeting : {greeting}</h2>
+                  <h4>
+                    showLatest : {showLatest.name} {showLatest.total}
+                  </h4>
+                  <h5>lastPrice : {lastPrice}</h5>
+                  <input id="productId" value={product._id} type="hidden" />
+                  <Typography className={classes.time} color='secondary'>  {format(timer)} <Timer className={classes.timer} color='secondary' /> </Typography>
+                </Grid>
+              </Grid>
+
+            </CardContent>
+          </Card>
+        </Then>
+      </If>
+      <Else>
+        <If condition={timer === 0} condition={Object.keys(showLatest).length && timer === 0} >
+          <Then>
+            <Dialog
               fullWidth={true}
               maxWidth='sm'
               open={open}
               aria-labelledby="max-width-dialog-title"
-              >
+            >
               <DialogTitle id="max-width-dialog-title">congratulations !!</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                {`congratulations for ${showLatest.name} you have bought this Product By ${showLatest.total} `}
+                  {`congratulations for ${showLatest.name} you have bought this Product By ${showLatest.total} `}
                 </DialogContentText>
-                </DialogContent>
-                <DialogActions>
+              </DialogContent>
+              <DialogActions>
                 <Button component={Link} to="/" variant="contained" color="primary">
-                      Back
-                    </Button>
-                  </DialogActions>
-              </Dialog> 
-         </Then>
-       </If>
+                  Back
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </Then>
+        </If>
       </Else>
       <Else>
-       <If condition={timer===0 } condition={! Object.keys(showLatest).length && timer===0} >
-         <Then>
-              <Dialog
+        <If condition={timer === 0} condition={!Object.keys(showLatest).length && timer === 0} >
+          <Then>
+            <Dialog
               fullWidth={true}
               maxWidth='sm'
               open={open}
               aria-labelledby="max-width-dialog-title"
-              >
+            >
               <DialogTitle id="max-width-dialog-title">No one Bidded !!</DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                No one Bidded on this product, please come back agin on another auction
+                  No one Bidded on this product, please come back agin on another auction
                 </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button component={Link} to="/" variant="contained" color="primary">
-                      Back
-                    </Button>
-                  </DialogActions>
-              </Dialog>
+              </DialogContent>
+              <DialogActions>
+                <Button component={Link} to="/" variant="contained" color="primary">
+                  Back
+                </Button>
+              </DialogActions>
+            </Dialog>
 
-         </Then>
-       </If>
-     </Else>
+          </Then>
+        </If>
+      </Else>
     </>
   ) : null;
 }
