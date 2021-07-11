@@ -41,16 +41,21 @@ function CarNameSpace() {
       return;
     }
     CategoryHelper.getAuction(name).then((response) => {
-      console.log(response.data)
+      // console.log(response.data)
       response.data.data?setCategoryInto(response.data.data):setCategoryInto({});
-      console.log(categoryInfo);
+      setLastPrice(response.data.data.startingPrice);
+      setTimer(response.data.data.timer);
+      console.log(response.data.data.startingPrice);
+      
+      
     }).catch((err) => {
       setCategoryInto({
         // message: err.response.status === 404 ? "Category not found " : "Internal server error"
       })
     })
+    socket.emit("newUser", { token: myCookie.load("token") });
   }, [])
-  console.log(categoryInfo);
+  // console.log(categoryInfo);
   const classes = useStyles();
   const {
     product,
@@ -85,7 +90,6 @@ function CarNameSpace() {
 
 
   // let totalUser=[];
-  socket.emit("newUser", { token: myCookie.load("token") });
 
   socket.on("greeting", (data) => {
     if (!totalUser.includes(data)) {
@@ -97,25 +101,26 @@ function CarNameSpace() {
   });
   const handelClick = () => {
     socket.emit("startBidding", {
-      counter: 15,
-      lastPrice: product.startingPrice,
+      counter: timer,
+      lastPrice: categoryInfo.startingPrice,
       text: myCookie.load("token"),
     });
-    console.log("startBidding");
+    console.log(categoryInfo.startingPrice,"startBidding");
   };
 
   const addMoneyHandler = (value) => {
     const x = lastPrice + parseInt(value);
     setLastPrice(x);
+    console.log(lastPrice,'((((((');
     socket.emit("increasePrice", {
-      lastPrice: lastPrice,
+      lastPrice: x,
       token: myCookie.load("token"),
     });
-    console.log("increasePrice");
+    console.log(lastPrice,"increasePrice");
   };
 
   socket.on("showLatest", (total) => {
-    console.log(total, '?????????');
+    console.log(total.total, '************');
     // setLastPrice(total.total)
     setShowLatest({
       name: total.name,
@@ -123,14 +128,14 @@ function CarNameSpace() {
     });
   });
 
-  // socket.on("liveBid", (latest) => {
-  //   console.log(latest, lastPrice , '???????????');
-  //   if (latest === 0 || latest === null) {
-  //     latest = lastPrice;
-  //   } else {
-  //     setLastPrice(latest)
-  //   }
-  // });
+  socket.on("liveBid", (latest) => {
+    console.log(latest, lastPrice , '???????????');
+    if (latest === 0 || latest === null) {
+      latest = lastPrice;
+    } else {
+      setLastPrice(latest)
+    }
+  });
 
   function format(time) {
     // Hours, minutes and seconds
