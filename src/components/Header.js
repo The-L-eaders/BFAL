@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import "./SASS/DarkMode.scss";
 import { Link } from "react-router-dom";
 import { alpha, makeStyles } from "@material-ui/core/styles";
@@ -17,13 +17,10 @@ import Drawer from "@material-ui/core/Drawer";
 import Divider from "@material-ui/core/Divider";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
-import superAgent from "superagent";
-import TextField from "@material-ui/core/TextField";
-import Modal from "@material-ui/core/Modal";
-import Backdrop from "@material-ui/core/Backdrop";
-import Fade from "@material-ui/core/Fade";
+import reactCookie from "react-cookies";
 import DarkModeToggle from "react-dark-mode-toggle";
-import GlobalState from "../contaxt/GlobalState";
+import { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -40,28 +37,14 @@ const useStyles = makeStyles((theme) => ({
       width: "100%",
     },
   },
-
-  btn: {
-    display: "block",
-    width: "40%",
-    margin: "auto",
-  },
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: "lightgrey",
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(5, 5),
-  },
   grow: {
     flexGrow: 1,
   },
   menuButton: {
     marginRight: theme.spacing(1),
+  },
+  link: {
+    textDecoration: "none",
   },
   title: {
     display: "none",
@@ -94,7 +77,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   inputRoot: {
-    color: "inherit",
+    // color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
@@ -119,18 +102,17 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   list: {
-    // display: "flex",
-    // flexWrap: 'wrap',
-    width: "50%",
-    textAlign: "center",
+    display: "flex",
+    flexWrap: "wrap",
+    flexDirection: "column",
+    alignItems: "center",
   },
   fullList: {
     width: "auto",
   },
 }));
-
 function Header() {
-  const { handleLogin, handleLogout, user } = useContext(GlobalState.Context);
+  const history = useHistory();
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
@@ -140,64 +122,12 @@ function Header() {
     bottom: false,
     right: false,
   });
-
-  const handelLoginSubmit = (e) => {
-    e.preventDefault();
-    const user = superAgent
-      .post("https://bid-fast-and-last.herokuapp.com/login")
-      .send({
-        email: e.target.email.value,
-        password: e.target.password.value,
-      })
-      .then((data) => {
-        handleLogin(data.body.token);
-        e.target.reset();
-        handleCloseLogin();
-      })
-      .catch((e) => console.log(e));
-  };
-  const handelSubmit = (e) => {
-    e.preventDefault();
-    const user = superAgent
-      .post("https://bid-fast-and-last.herokuapp.com/register")
-      .send({
-        email: e.target.email.value,
-        password: e.target.password.value,
-        userName: e.target.userName.value,
-      })
-      .then((data) => {
-        e.target.reset();
-        handleClose();
-      })
-      .catch((e) => console.log(e));
-  };
-
   const [isDarkMode, setIsDarkMode] = useState(() => false);
-
-  const [open, setOpen] = React.useState(false);
-  const [openLogin, setOpenLogin] = React.useState(false);
-
-  const handleLogoutUser = () => {
-    handleLogout();
-
+  const handleLogout = () => {
+    reactCookie.remove("token");
+    history.push('/');
     handleMenuClose();
   };
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleOpenLogin = () => {
-    setOpenLogin(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleCloseLogin = () => {
-    setOpenLogin(false);
-  };
-
   const toggleDrawer = (anchor, open) => (event) => {
     if (
       event.type === "keydown" &&
@@ -205,30 +135,23 @@ function Header() {
     ) {
       return;
     }
-
     setState({ ...state, [anchor]: open });
   };
-
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
-
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
   };
-
   const handleMenuClose = () => {
     setAnchorEl(null);
     handleMobileMenuClose();
   };
-
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
-
   const list = (anchor) => (
     <div
       className={clsx(classes.list, {
@@ -238,27 +161,37 @@ function Header() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      {user.isGuestUser ? (
+      {reactCookie.load("token") ? (
         <>
-          <MenuItem onClick={handleOpenLogin}>Login</MenuItem>
-          <MenuItem onClick={handleOpen}>Register</MenuItem>
-        </>
-      ) : (
-        <>
-          <MenuItem onClick={handleLogoutUser}>Logout</MenuItem>
-          <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-          <Divider />
-          <Link to="/add">
-            <MenuItem onClick={handleMenuClose}>Add Product</MenuItem>
-          </Link>
-          <Link to="/category">
-            <MenuItem onClick={handleMenuClose}>Category</MenuItem>
+          <Typography variant="button" onClick={handleLogout}>
+            Logout
+          </Typography>
+          <Link to="/profile">
+            <Typography variant="button" onClick={handleMenuClose}>
+              Profile
+            </Typography>
           </Link>
         </>
-      )}
+      ) : null}
+      <Link to="/login" className={classes.link}>
+        <Typography variant="button">Login</Typography>
+      </Link>
+      <Link to="/register" className={classes.link}>
+        <Typography variant="button">Register</Typography>
+      </Link>
+      <Divider />
+      <Link to="/add" className={classes.link}>
+        <Typography variant="button" onClick={handleMenuClose}>
+          Add Product
+        </Typography>
+      </Link>
+      <Link to="/category" className={classes.link}>
+        <Typography variant="button" onClick={handleMenuClose}>
+          Category
+        </Typography>
+      </Link>
     </div>
   );
-
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
     <Menu
@@ -273,7 +206,6 @@ function Header() {
       <MenuItem>
         <HomeIcon />
       </MenuItem>
-
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -287,145 +219,19 @@ function Header() {
       </MenuItem>
     </Menu>
   );
-
   return (
     <>
-      {/* Register Modal */}
-      <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={open}
-          onClose={handleClose}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={open}>
-            <div className={classes.paper}>
-              <h3>Register </h3>
-              <form
-                onSubmit={handelSubmit}
-                className={classes.root}
-                noValidate
-                action="/register"
-                method="POST"
-              >
-                <TextField
-                  type="text"
-                  name="userName"
-                  id="standard-basic"
-                  label="User Name"
-                  variant="outlined"
-                />
-                <TextField
-                  type="password"
-                  name="password"
-                  id="filled-basic"
-                  label="Password"
-                  variant="outlined"
-                />
-                <TextField
-                  type="email"
-                  name="email"
-                  id="filled-basic"
-                  label="Email"
-                  variant="outlined"
-                />
-                <TextField
-                  type="date"
-                  id="birthday"
-                  name="birthday"
-                  id="filled-basic"
-                  variant="outlined"
-                />
-                <Button
-                  variant="outlined"
-                  type="submit"
-                  color="primary"
-                  className={classes.btn}
-                >
-                  Register
-                </Button>
-              </form>
-            </div>
-          </Fade>
-        </Modal>
-      </div>
-
-      {/* Login Modal */}
-      <div>
-        <Modal
-          aria-labelledby="transition-modal-title"
-          aria-describedby="transition-modal-description"
-          className={classes.modal}
-          open={openLogin}
-          onClose={handleCloseLogin}
-          closeAfterTransition
-          BackdropComponent={Backdrop}
-          BackdropProps={{
-            timeout: 500,
-          }}
-        >
-          <Fade in={openLogin}>
-            <div className={classes.paper}>
-              <h3>Login </h3>
-              <form
-                onSubmit={handelLoginSubmit}
-                className={classes.root}
-                noValidate
-              >
-                <TextField
-                  id="standard-basic"
-                  label="Email"
-                  type="email"
-                  name="email"
-                  variant="outlined"
-                />
-                <TextField
-                  id="filled-basic"
-                  label="Password"
-                  variant="outlined"
-                  type="password"
-                  name="password"
-                />
-                <Button variant="outlined" type="submit" color="primary">
-                  Login
-                </Button>
-              </form>
-            </div>
-          </Fade>
-        </Modal>
-      </div>
-      <div className={classes.grow}>
-        <AppBar position="static">
+      <div className={classes.grow} position="fixed">
+        <AppBar>
           <Toolbar>
             <img
               src="https://freepngimg.com/thumb/auction/22904-7-auction-transparent-image-thumb.png"
               className={classes.image}
             />
-
             <Typography className={classes.title} variant="h6" noWrap>
               Bid Fast & Last
             </Typography>
-            <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
-              <InputBase
-                placeholder="Search…"
-                classes={{
-                  root: classes.inputRoot,
-                  input: classes.inputInput,
-                }}
-                inputProps={{ "aria-label": "search" }}
-              />
-            </div>
             <div className={classes.grow} />
-
             <DarkModeToggle
               onChange={setIsDarkMode}
               checked={isDarkMode}
@@ -437,7 +243,6 @@ function Header() {
                   <HomeIcon />
                 </MenuItem>
               </Link>
-
               <div>
                 {
                   <React.Fragment key="bottom">
@@ -471,5 +276,4 @@ function Header() {
     </>
   );
 }
-
 export default Header;

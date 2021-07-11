@@ -11,7 +11,7 @@
   * declare the instance.
   */
  const instance = axios.create({
-     baseURL: "https://whatthehack.herokuapp.com/",
+     baseURL: "https://bid-fast-and-last.herokuapp.com/",
      params: {},
  });
 
