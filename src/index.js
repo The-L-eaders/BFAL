@@ -9,7 +9,7 @@ const MyApp = () => {
     <>
       <BrowserRouter>
         <SettingsProvider>
-          <App />
+            <App />
         </SettingsProvider>{" "}
       </BrowserRouter>
     </>

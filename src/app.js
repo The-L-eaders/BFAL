@@ -9,6 +9,12 @@ import Category from "./components/Category";
 import AddProduct from "./components/AddProduct";
 import HomePage from "./components/HomePage";
 
+
+
+          
+
+
+
 function App() {
   return (
     <main>
@@ -24,11 +30,15 @@ function App() {
             <AddProduct />
           </Route>
 
+          <Route exact path="/car">
+          <CarNameSpace />
+          </Route>
+
           <Route exact path="/">
             {null}
           </Route>
         </Switch>
-        <CarNameSpace />
+
         <HomePage />
       </Provider>
     </main>
