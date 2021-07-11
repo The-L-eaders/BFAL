@@ -5,6 +5,7 @@ import Card from "@material-ui/core/Card";
 import CardHeader from "@material-ui/core/CardHeader";
 import { useHistory } from "react-router-dom";
 
+
 const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 345,
@@ -44,9 +45,8 @@ export default function RecipeReviewCard() {
 
   function handleShowCategory(name) {
     history.push(`category-products/${name}`);
+    
   }
-
-
   return (
     <div>
       {categories && categories.map((row, i) => {
