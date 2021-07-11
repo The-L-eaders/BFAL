@@ -8,14 +8,19 @@ import Header from "./components/Header";
 import Category from "./components/Category";
 import AddProduct from "./components/AddProduct";
 import HomePage from "./components/HomePage";
+import Profile from "./components/Profile";
+
 
 function App() {
   return (
     <main>
       <Provider store={store}>
         <Header />
-
         <Switch>
+        <Route exact path="/profile">
+            <Profile />
+          </Route>
+          
           <Route exact path="/category">
             <Category />
           </Route>
