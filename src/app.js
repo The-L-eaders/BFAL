@@ -1,4 +1,5 @@
 import React from "react";
+import Main from "./Main";
 import { Route, Switch } from "react-router-dom";
 // import isDarkMode from './components/Header'
 import { Provider } from "react-redux";
@@ -14,8 +15,7 @@ import Register from "./components/Register";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./store/theme";
 import Profile from "./components/Profile";
-
-function App() {
+export default function App() {
   return (
     <main>
       <ThemeProvider theme={theme}>
@@ -26,11 +26,10 @@ function App() {
             <Route exact path="/category">
               <Category />
             </Route>
-
+            {/* <Main/> */}
             <Route exact path="/profile">
               <Profile />
             </Route>
-
             <Route exact path="/add">
               <AddProduct />
             </Route>
@@ -43,7 +42,7 @@ function App() {
               <Register />
             </Route>
 
-            <Route exact path="/car">
+            <Route exact path="/category-products/:name">
               <CarNameSpace />
             </Route>
 
@@ -58,4 +57,3 @@ function App() {
     </main>
   );
 }
-export default App;

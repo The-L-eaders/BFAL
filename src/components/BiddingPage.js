@@ -7,7 +7,8 @@ import { socket } from "../contaxt/biddingContext";
 import { Link } from "react-router-dom";
 import useStyles from "./bidComp-style";
 import Timer from "@material-ui/icons/Timer";
-
+import { useParams, useHistory } from "react-router-dom";
+import { CategoryHelper } from "../api/CategoryHelper";
 import {
   Dialog,
   DialogActions,
@@ -24,10 +25,9 @@ import {
   Typography,
 } from "@material-ui/core";
 
-const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
+// const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
 function CarNameSpace() {
-  const classes = useStyles();
   const {
     product,
     setProduct,
@@ -43,32 +43,55 @@ function CarNameSpace() {
     setTotalUser,
   } = useContext(BiddingContext);
 
+  const history = useHistory();
+  const { name } = useParams();
+  const [categoryInfo, setCategoryInto] = useState({});
+
   useEffect(() => {
-    superAgent
-      .get(ENDPOINT)
-      .set(`Authorization`, `Bearer ${myCookie.load("token")}`)
-      .then((data) => {
-        console.log(data.body.data);
-        setProduct(data.body.data);
-        if (data.body.data) {
-          setTimer(data.body.data.timer);
-          setLastPrice(data.body.data.startingPrice);
-        }
-      })
-      .catch((e) => console.log(e.message, "-------e"));
     socket.emit("newUser", { token: myCookie.load("token") });
+
+    if (!name) {
+      history.push("/category");
+      return;
+    }
+    CategoryHelper.getAuction(name)
+      .then((response) => {
+        response.data.data
+          ? setCategoryInto(response.data.data)
+          : setCategoryInto({});
+      })
+      .catch((err) => {
+        setCategoryInto({
+          // message: err.response.status === 404 ? "Category not found " : "Internal server error"
+        });
+      });
+
+    socket.on("greeting", (data) => {
+      if (!totalUser.includes(data)) {
+        // totalUser.push(data)
+        setTotalUser([...totalUser, data]);
+      }
+      console.log(totalUser, ".............");
+      setGreeting(data);
+    });
+
+    socket.on("showLatest", (total) => {
+      console.log(total, "?????????");
+      // setLastPrice(total.total)
+      setShowLatest({
+        name: total.name,
+        total: total.total,
+      });
+    });
+
+    socket.on("liveCounter", (data) => {
+      setTimer(data);
+      console.log(data);
+    });
   }, []);
 
-  // let totalUser=[];
+  const classes = useStyles();
 
-  socket.on("greeting", (data) => {
-    if (!totalUser.includes(data)) {
-      // totalUser.push(data)
-      setTotalUser([...totalUser, data]);
-    }
-    console.log(totalUser, ".............");
-    setGreeting(data);
-  });
   const handelClick = () => {
     socket.emit("startBidding", {
       counter: 15,
@@ -87,15 +110,6 @@ function CarNameSpace() {
     });
     console.log("increasePrice");
   };
-
-  socket.on("showLatest", (total) => {
-    console.log(total, "?????????");
-    // setLastPrice(total.total)
-    setShowLatest({
-      name: total.name,
-      total: total.total,
-    });
-  });
 
   // socket.on("liveBid", (latest) => {
   //   console.log(latest, lastPrice , '???????????');
@@ -120,42 +134,29 @@ function CarNameSpace() {
     ret += "" + secs;
     return ret;
   }
-  socket.on("liveCounter", (data) => {
-    setTimer(data);
-  });
 
-  // 3ebra //
-  // socket.on("try", (data) => {
-  //   if (
-  //     data.lastToken == myCookie.load("token") ||
-  //     data.lastTokenHouse == myCookie.load("token")
-  //   ) {
-  //     socket.emit("sold", data);
-  //   }
-  // });
-
-  return product ? (
+  return categoryInfo.category ? (
     <>
       <If condition={timer > 0}>
         {/* {console.log(timer)} */}
         <Then>
           <Card className={classes.card}>
-            <CardHeader title={product.productName} />
+            <CardHeader title={categoryInfo.productName} />
             <CardContent>
               <Grid container spacing={2} justifyContent="space-between">
                 <Grid item xs={12} sm={6} md={4}>
                   <img
                     width="400"
-                    src={product.productImage}
+                    src={categoryInfo.productImage}
                     onClick={handelClick}
                   />
                   <input
                     type="hidden"
-                    value={product.startingPrice}
+                    value={categoryInfo.startingPrice}
                     id="startingPrice"
                   />
-                  <input type="hidden" value={product.timer} id="timer" />
-                  <p id="Description">{product.productDis}</p>
+                  <input type="hidden" value={categoryInfo.timer} id="timer" />
+                  <p id="Description">{categoryInfo.productDis}</p>
                   <CardActions disableSpacing className={classes.buttons}>
                     <Box>
                       <Button
@@ -226,7 +227,7 @@ function CarNameSpace() {
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  {`congratulations for ${showLatest.name} you have bought this Product By ${showLatest.total} `}
+                  {`Congrats for ${showLatest.name}, you have bought this Product for ${showLatest.total}$`}
                 </DialogContentText>
               </DialogContent>
               <DialogActions>
@@ -256,12 +257,12 @@ function CarNameSpace() {
               aria-labelledby="max-width-dialog-title"
             >
               <DialogTitle id="max-width-dialog-title">
-                No one Bidded !!
+                No one Bided !!
               </DialogTitle>
               <DialogContent>
                 <DialogContentText>
-                  No one Bidded on this product, please come back agin on
-                  another auction
+                  No one Bided on this product, please come back agin on another
+                  auction
                 </DialogContentText>
               </DialogContent>
               <DialogActions>

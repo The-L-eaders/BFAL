@@ -23,12 +23,9 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
-  text: {
-    margin: 50,
-    marginTop: 20,
-  },
+  text: {},
   text1: {
-    marginTop: 5,
+    fontSize: "1em",
   },
   root: {
     display: "block",
@@ -46,7 +43,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#EFEFEF",
     borderBlockColor: "#3f51b5",
     marginTop: 2,
-    height: 500,
+    maxHeight: 550,
+    marginBottom: "2%",
     overflow: "auto",
     display: "flex",
     flexWrap: "wrap",
@@ -146,21 +144,21 @@ function Profile() {
                           color="textSecondary"
                           className={style.text1}
                         >
-                          Product Name :{product.productName}
+                          Product Name: {product.productName}
                         </Typography>
                         <Typography
                           variant="h6"
                           color="textSecondary"
                           className={style.text1}
                         >
-                          Product Starting Price :{product.startingPrice}$
+                          Product Starting Price: {product.startingPrice}$
                         </Typography>
                         <Typography
                           variant="h6"
                           color="textSecondary"
                           className={style.text1}
                         >
-                          Product's Status :{product.status}$
+                          Product's Status: {product.status}$
                         </Typography>
                       </Card>
                     );
