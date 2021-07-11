@@ -21,7 +21,7 @@ function LogIn() {
       .then((data) => {
         reactCookie.save("token", data.body.token);
         e.target.reset();
-        // history.push('/profile')
+        history.push('/profile')
       })
       .catch((e) => console.log(e));
   };

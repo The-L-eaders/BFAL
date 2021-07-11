@@ -13,6 +13,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./store/theme";
+import Profile from "./components/Profile";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
           <Switch>
             <Route exact path="/category">
               <Category />
+            </Route>
+
+            <Route exact path="/profile">
+              <Profile />
             </Route>
 
             <Route exact path="/add">
@@ -38,13 +43,14 @@ function App() {
               <Register />
             </Route>
 
+            <Route exact path="/car">
+              <CarNameSpace />
+            </Route>
+
             <Route exact path="/">
               <HomePage />
             </Route>
           </Switch>
-
-          <CarNameSpace />
-
 
           {/* <Footer /> */}
         </Provider>
