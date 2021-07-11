@@ -45,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(1),
   },
 
+  link: {
+    textDecoration: "none",
+  },
 
   title: {
     display: "none",
@@ -70,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
     flexWrap: "wrap",
     flexDirection: "column",
     alignItems: "center",
-
   },
   fullList: {
     width: "auto",
@@ -138,25 +140,33 @@ function Header() {
     >
       {reactCookie.load("token") ? (
         <>
-          <Typography variant="button" onClick={handleLogout}>Logout</Typography>
-          <Typography variant="button" onClick={handleMenuClose}>Profile</Typography>
+          <Typography variant="button" onClick={handleLogout}>
+            Logout
+          </Typography>
+          <Typography variant="button" onClick={handleMenuClose}>
+            Profile
+          </Typography>
         </>
       ) : null}
 
-      <Link to="/login">
+      <Link to="/login" className={classes.link}>
         <Typography variant="button">Login</Typography>
       </Link>
 
-      <Link to="/register">
+      <Link to="/register" className={classes.link}>
         <Typography variant="button">Register</Typography>
       </Link>
 
       <Divider />
-      <Link to="/add">
-        <Typography variant="button" onClick={handleMenuClose}>Add Product</Typography>
+      <Link to="/add" className={classes.link}>
+        <Typography variant="button" onClick={handleMenuClose}>
+          Add Product
+        </Typography>
       </Link>
-      <Link to="/category">
-        <Typography variant="button" onClick={handleMenuClose}>Category</Typography>
+      <Link to="/category" className={classes.link}>
+        <Typography variant="button" onClick={handleMenuClose}>
+          Category
+        </Typography>
       </Link>
     </div>
   );
@@ -193,7 +203,7 @@ function Header() {
   return (
     <>
       <div className={classes.grow} position="fixed">
-        <AppBar >
+        <AppBar>
           <Toolbar>
             <img
               src="https://freepngimg.com/thumb/auction/22904-7-auction-transparent-image-thumb.png"

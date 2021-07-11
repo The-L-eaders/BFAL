@@ -46,7 +46,7 @@ function App() {
           <CarNameSpace />
 
 
-          <Footer />
+          {/* <Footer /> */}
         </Provider>
       </ThemeProvider>
     </main>
