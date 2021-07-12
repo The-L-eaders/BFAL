@@ -1,0 +1,35 @@
+.seats {
+  display: flex;
+  flex-wrap: wrap;
+  width: 80%;
+  margin: auto;
+
+  .seat {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 1%;
+    background-image: url("https://www.pngix.com/pngfile/big/643-6430478_click-to-view-gallery-single-seater-single-sofa.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 300px;
+    height: 200px;
+    transform: rotate(180deg);
+
+    .joinedUser {
+      color: black;
+      text-align: center;
+      width: 90px;
+      height: 90px;
+      margin: auto;
+      background-color: rgb(214, 205, 205);
+      border-radius: 50px;
+      transform: rotate(180deg);
+
+      img{
+          margin-left: 70px;
+          margin-top: -30px;
+      }
+    }
+  }
+}

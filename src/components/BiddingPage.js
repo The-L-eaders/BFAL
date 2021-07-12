@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import "./SASS/BiddingPage.scss";
 import myCookie from "react-cookies";
 import { If, Then, Else } from "react-if";
 import superAgent from "superagent";
@@ -47,40 +48,32 @@ function CarNameSpace() {
     setShowLatest,
     totalUser,
     setTotalUser,
-    userName
   } = useContext(BiddingContext);
 
   useEffect(() => {
+    socket.emit("newUser", { token: myCookie.load("token") });
+
     if (!name) {
       history.push("/category");
       return;
     }
     CategoryHelper.getAuction(name)
       .then((response) => {
-        // console.log(response.data)
         response.data.data
           ? setCategoryInto(response.data.data)
           : setCategoryInto({});
         setLastPrice(response.data.data.startingPrice);
         setTimer(response.data.data.timer);
-        console.log(response.data.data.startingPrice);
       })
       .catch((err) => {
-        setCategoryInto({
-          // message: err.response.status === 404 ? "Category not found " : "Internal server error"
-        });
+        setCategoryInto({});
       });
-    socket.emit("newUser", { token: myCookie.load("token") });
+
     socket.on("greeting", (data) => {
-      if (!totalUser.includes(data)) {
-        // totalUser.push(data)
-        setTotalUser([...totalUser, data]);
-      }
       setGreeting(data);
     });
 
     socket.on("showLatest", (total) => {
-      console.log(total.total, "************");
       // setLastPrice(total.total)
       setShowLatest({
         name: total.name,
@@ -88,8 +81,12 @@ function CarNameSpace() {
       });
     });
 
+    socket.on("users", (allUsers) => {
+      console.log(allUsers);
+      setTotalUser([...allUsers]);
+    });
+
     socket.on("liveBid", (latest) => {
-      console.log(latest, lastPrice, "???????????");
       if (latest === 0 || latest === null) {
         latest = lastPrice;
       } else {
@@ -99,37 +96,36 @@ function CarNameSpace() {
 
     socket.on("liveCounter", (data) => {
       setTimer(data);
-      console.log(data);
     });
   }, []);
 
-  const classes = useStyles();
+  useEffect(() => {
+    console.log("inside useEffect Greeting");
+  }, [greeting]);
 
+  const classes = useStyles();
 
   const handelClick = () => {
     socket.emit("startBidding", {
-      counter: timer,
+      counter: 15,
       lastPrice: categoryInfo.startingPrice,
       text: myCookie.load("token"),
     });
-    console.log(categoryInfo.startingPrice, "startBidding", "how many time");
   };
 
   const addMoneyHandler = (value) => {
     const x = lastPrice + parseInt(value);
     setLastPrice(x);
-    console.log(lastPrice, "((((((");
     socket.emit("increasePrice", {
       lastPrice: x,
       token: myCookie.load("token"),
-      userName:userName
+      userName: myCookie.load("userName"),
     });
-    console.log(userName, "increasePrice");
   };
 
-  const showHandler=()=>{
-    setShowLatest({})
-  }
+  const showHandler = () => {
+    setShowLatest({});
+  };
 
   function format(time) {
     // Hours, minutes and seconds
@@ -149,7 +145,6 @@ function CarNameSpace() {
   return categoryInfo.category ? (
     <>
       <If condition={timer > 0}>
-        {/* {console.log(timer)} */}
         <Then>
           <Card className={classes.card}>
             <CardHeader title={categoryInfo.productName} />
@@ -203,6 +198,7 @@ function CarNameSpace() {
                     </Box>
                   </CardActions>
                 </Grid>
+
                 <Grid item xs={12} sm={6} md={4}>
                   <h2>greeting : {greeting}</h2>
                   <h4>
@@ -292,6 +288,26 @@ function CarNameSpace() {
           </Then>
         </If>
       </Else>
+      <div className="seats">
+        {totalUser.map((name) => {
+          return (
+            <div className="seat">
+              <div className="joinedUser">
+                {name}
+
+                {showLatest.name === name ? (
+                  <img
+                    src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                    width="50px"
+                    height="50px"
+                  />
+                ) : null}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      ;
     </>
   ) : null;
 }

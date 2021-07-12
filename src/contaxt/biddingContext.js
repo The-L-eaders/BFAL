@@ -3,9 +3,6 @@ import React, { useState } from "react";
 
 export const BiddingContext = React.createContext();
 
-// const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
-
-// export const socket = socketIOClient(ENDPOINT);
 function SettingsProvider(props) {
   const [product, setProduct] = useState({});
   const [timer, setTimer] = useState(90);
@@ -13,7 +10,8 @@ function SettingsProvider(props) {
   const [greeting, setGreeting] = useState("");
   const [showLatest, setShowLatest] = useState({});
   const [totalUser ,setTotalUser] = useState([]);
-  const [userName,setUserName]=useState('')
+  const [userName,setUserName]=useState('');
+  
   const state = {
     product,
     setProduct,
@@ -29,7 +27,6 @@ function SettingsProvider(props) {
     setTotalUser,
     userName,
     setUserName
-
   };
   return (
     <BiddingContext.Provider value={state}>
