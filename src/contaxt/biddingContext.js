@@ -12,7 +12,8 @@ function SettingsProvider(props) {
   const [lastPrice, setLastPrice] = useState(0);
   const [greeting, setGreeting] = useState("");
   const [showLatest, setShowLatest] = useState({});
-  const [totalUser ,setTotalUser] = useState([])
+  const [totalUser ,setTotalUser] = useState([]);
+  const [userName,setUserName]=useState('')
   const state = {
     product,
     setProduct,
@@ -25,7 +26,10 @@ function SettingsProvider(props) {
     showLatest,
     setShowLatest,
     totalUser ,
-    setTotalUser
+    setTotalUser,
+    userName,
+    setUserName
+
   };
   return (
     <BiddingContext.Provider value={state}>

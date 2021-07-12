@@ -47,6 +47,7 @@ function CarNameSpace() {
     setShowLatest,
     totalUser,
     setTotalUser,
+    userName
   } = useContext(BiddingContext);
 
   useEffect(() => {
@@ -121,9 +122,14 @@ function CarNameSpace() {
     socket.emit("increasePrice", {
       lastPrice: x,
       token: myCookie.load("token"),
+      userName:userName
     });
-    console.log(lastPrice, "increasePrice");
+    console.log(userName, "increasePrice");
   };
+
+  const showHandler=()=>{
+    setShowLatest({})
+  }
 
   function format(time) {
     // Hours, minutes and seconds
@@ -241,6 +247,7 @@ function CarNameSpace() {
                   to="/"
                   variant="contained"
                   color="primary"
+                  onClick={showHandler}
                 >
                   Back
                 </Button>
@@ -276,6 +283,7 @@ function CarNameSpace() {
                   to="/"
                   variant="contained"
                   color="primary"
+                  onClick={showHandler}
                 >
                   Back
                 </Button>
