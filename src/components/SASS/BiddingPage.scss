@@ -1,35 +1,209 @@
 .seats {
   display: flex;
   flex-wrap: wrap;
-  width: 80%;
+  width: 50%;
   margin: auto;
+  margin-top: 5%;
 
   .seat {
     display: flex;
     flex-wrap: wrap;
     margin: 1%;
-    background-image: url("https://www.pngix.com/pngfile/big/643-6430478_click-to-view-gallery-single-seater-single-sofa.png");
+    background-image: url("https://w7.pngwing.com/pngs/755/218/png-transparent-coffee-tables-bar-interior-design-services-furniture-bar-table-kitchen-furniture-drawer.png");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    width: 250px;
-    height: 150px;
-    transform: rotate(180deg);
+    width: 120px;
+    height: 100px;
+    // transform: rotate(180deg);
+  }
+}
 
-    .joinedUser {
-      color: black;
-      text-align: center;
-      width: 90px;
-      height: 90px;
-      margin: auto;
-      background-color: rgb(214, 205, 205);
-      border-radius: 50px;
-      transform: rotate(180deg);
+//     .joinedUser {
+//       color: black;
+//       text-align: center;
+//       width: 90px;
+//       height: 90px;
+//       margin: auto;
+//       background-color: rgb(214, 205, 205);
+//       border-radius: 50px;
+//       transform: rotate(180deg);
 
-      img{
-          margin-left: 70px;
-          margin-top: -30px;
-      }
+//       img{
+//           margin-left: 70px;
+//           margin-top: -30px;
+//       }
+//     }
+//   }
+// }
+
+// * {
+// 	box-sizing: border-box;
+// }
+
+.movie-container {
+  margin: 20px 0;
+}
+
+.movie-container select {
+  background-color: #fff;
+  border: 0;
+  border-radius: 5px;
+  font-size: 14px;
+  margin-left: 10px;
+  padding: 5px 15px;
+}
+
+.container {
+  perspective: 1000px;
+  margin-bottom: 30px;
+}
+// .bg {
+//   background-image: url("https://us.123rf.com/450wm/panychev/panychev1603/panychev160300672/54290362-abstract-sfondo-blu-scuro.jpg?ver=6");
+//   background-repeat: no-repeat;
+//   background-size: cover;
+// }
+
+// .seat {
+//   background-color: rgb(102, 102, 102);
+//   height: 12px;
+//   width: 15px;
+//   margin: 3px;
+//   border-radius: 8px 8px 0 0;
+// }
+
+// .seat.selected {
+//   background-color: rgb(36, 175, 209);
+// }
+
+// .seat.occupied {
+//   background-color: #fff;
+// }
+// .seat:nth-of-type(2) {
+//   margin-right: 15px;
+// }
+// .seat:nth-last-of-type(2) {
+//   margin-left: 15px;
+// }
+
+// .seat:not(.occupied):hover {
+//   cursor: pointer;
+//   transform: scale(1.3);
+// }
+.showcase .seat:not(.occupied):hover {
+  cursor: default;
+  transform: scale(1);
+}
+
+.showcase {
+  background-color: rgba(0, 0, 0, 0.15);
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: #777;
+  list-style-type: none;
+  display: flex;
+  justify-content: space-between;
+}
+
+.showcase li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.showcase li small {
+  margin-left: 2px;
+}
+.row {
+  display: flex;
+}
+
+.screen {
+  margin: auto;
+  margin-top: 7%;
+  background-color: #fff;
+  height: 350px;
+  width: 750px;
+  transform: rotateX(-20deg);
+  box-shadow: 0 3px 10px rgba(34, 33, 33, 0.836);
+}
+
+p.text {
+  margin: 5px 0;
+}
+p.text span {
+  color: rgb(36, 175, 209);
+}
+.tableContainer {
+  margin-top: 8%;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#table-wrapper {
+  width: 30%;
+  left: 25%;
+  height: 250px;
+  transform: rotate(-90deg);
+  top: 100px;
+  .the-table {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtGlfKqddP-ToV0n9O5HklbqX-KxRIfZNilA&usqp=CAU");
+    background-size: cover;
+    position: absolute;
+    border-radius: 50%;
+    left: 100px;
+    top: 100px;
+    height: 200px;
+    width: 200px;
+    background-color: #b99b82;
+    box-shadow: 0 3px 9pt rgba(0, 0, 0, 0.23), 0 3px 9pt rgba(0, 0, 0, 0.16);
+  }
+  .chair {
+    width: 80px;
+    height: 80px;
+    background-color: brown;
+    border-radius: 50px;
+    position: relative;
+
+    &:nth-child(1) {
+      background-image: url("https://i.pinimg.com/originals/c6/47/af/c647af420f46f1a435866d0df13d08a6.jpg");
+      background-size: cover;
+      left: 180px;
+    }
+    &:nth-child(2) {
+      background-image: url("https://i.pinimg.com/originals/c6/47/af/c647af420f46f1a435866d0df13d08a6.jpg");
+      background-size: cover;
+      top: 79px;
+      left: 10px;
+    }
+    &:nth-child(3) {
+      background-image: url("https://i.pinimg.com/originals/c6/47/af/c647af420f46f1a435866d0df13d08a6.jpg");
+      background-size: cover;
+      top: 150px;
+      left: 180px;
+    }
+    &:nth-child(4) {
+      background-image: url("https://i.pinimg.com/originals/c6/47/af/c647af420f46f1a435866d0df13d08a6.jpg");
+      background-size: cover;
+      top: -79px;
+      left: 311px;
     }
   }
+}
+
+.show {
+  display: block;
+  background-color: #ad1457;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  transform: rotate(90deg);
+}
+
+.hide {
+  display: none;
+}
+
+.bidingSign{
+  transform: rotate(20deg);
 }
