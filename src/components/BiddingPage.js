@@ -99,9 +99,7 @@ function CarNameSpace() {
     });
   }, []);
 
-  useEffect(() => {
-    console.log("inside useEffect Greeting");
-  }, [greeting]);
+
 
   const classes = useStyles();
 
