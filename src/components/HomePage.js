@@ -132,7 +132,7 @@ function Announcements() {
 
   const handleClick = (event) => {
     enqueueSnackbar(
-      `${event.name} sold with price ${event.price} on our website recently`
+      `${event.name} sold with price ${event.price} recently !`
     );
   };
 

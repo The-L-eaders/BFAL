@@ -126,6 +126,7 @@ function Header() {
   const [isDarkMode, setIsDarkMode] = useState(() => false);
   const handleLogout = () => {
     reactCookie.remove("token");
+    reactCookie.remove("userName");
     history.push("/");
     handleMenuClose();
   };

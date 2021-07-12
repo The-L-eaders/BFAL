@@ -1,4 +1,4 @@
-import React , {useContext} from "react";
+import React, { useContext } from "react";
 import superAgent from "superagent";
 import reactCookie from "react-cookies";
 import { makeStyles } from "@material-ui/core/styles";
@@ -10,7 +10,7 @@ import { Typography } from "@material-ui/core";
 import { BiddingContext } from "../contaxt/biddingContext";
 
 function LogIn() {
-  const {setUserName}= useContext(BiddingContext)
+  const { setUserName } = useContext(BiddingContext);
   const history = useHistory();
   const handelSubmit = (e) => {
     e.preventDefault();
@@ -21,10 +21,10 @@ function LogIn() {
         password: e.target.password.value,
       })
       .then((data) => {
-        setUserName(data.body.user.userName)
         reactCookie.save("token", data.body.token);
+        reactCookie.save("userName", data.body.user.userName);
         e.target.reset();
-        history.push('/profile')
+        history.push("/profile");
       })
       .catch((e) => console.log(e));
   };
@@ -36,9 +36,9 @@ function LogIn() {
       display: "flex",
       flexWrap: "wrap",
       flexDirection: "column",
-   
-        width: "60%",
-        margin: "auto",
+
+      width: "60%",
+      margin: "auto",
     },
 
     form: {
