@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useContext} from "react";
 import superAgent from "superagent";
 import reactCookie from "react-cookies";
 import { makeStyles } from "@material-ui/core/styles";
@@ -7,8 +7,10 @@ import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
+import { BiddingContext } from "../contaxt/biddingContext";
 
 function LogIn() {
+  const {setUserName}= useContext(BiddingContext)
   const history = useHistory();
   const handelSubmit = (e) => {
     e.preventDefault();
@@ -19,6 +21,7 @@ function LogIn() {
         password: e.target.password.value,
       })
       .then((data) => {
+        setUserName(data.body.user.userName)
         reactCookie.save("token", data.body.token);
         e.target.reset();
         history.push('/profile')
