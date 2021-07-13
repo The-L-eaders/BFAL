@@ -189,7 +189,7 @@ function Header() {
             </Button>
           </Link>
 
-          <Link className={classes.link}>
+          <Link to="#" className={classes.link}>
             <Button
               variant="button"
               className={classes.logoutBtn}
@@ -208,19 +208,19 @@ function Header() {
       ) : (
         <>
           <Link to="/login" className={classes.link}>
-            <Button variant="button" className={classes.btn}>
+            <Button  className={classes.btn}>
               <ExitToAppOutlinedIcon />
               Login
             </Button>
           </Link>
           <Link to="/register" className={classes.link}>
-            <Button variant="button" className={classes.btn}>
+            <Button  className={classes.btn}>
               <CreateOutlinedIcon />
               Register
             </Button>
           </Link>
           <Link to="/about" className={classes.link}>
-            <Typography variant="button" onClick={handleMenuClose}>
+            <Typography  onClick={handleMenuClose}>
               About Us
             </Typography>
           </Link>

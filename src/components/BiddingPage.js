@@ -51,6 +51,7 @@ function CarNameSpace() {
   } = useContext(BiddingContext);
 
   const [errorMessage, setErrorMessage] = useState(false);
+  const [bodyLoading,setBodyLoading] = useState(true);
 
   useEffect(() => {
 
@@ -67,6 +68,7 @@ function CarNameSpace() {
         setCategoryInto(response.data.data)
         setLastPrice(response.data.data.startingPrice);
         setTimer(response.data.data.timer);
+        setBodyLoading(false);
       })
       .catch((err) => {
         setErrorMessage("Internal server error !");
@@ -76,7 +78,7 @@ function CarNameSpace() {
   }, []);
 
   useEffect(() => {
-    if (!errorMessage) {
+    if (!errorMessage && !bodyLoading) {
       socket.emit("newUser", { token: myCookie.load("token") });
 
       socket.on("greeting", (data) => {
@@ -111,7 +113,7 @@ function CarNameSpace() {
       });
     }
 
-  }, [errorMessage])
+  }, [errorMessage,bodyLoading])
 
   const useStyles = makeStyles((theme) => ({
     button: {
@@ -162,7 +164,7 @@ function CarNameSpace() {
 
   return (
 
-    <div className="bg">
+    <div className="bg bidding-page-warpper">
       {errorMessage ? (
         <div>
           <Dialog
@@ -181,8 +183,8 @@ function CarNameSpace() {
             </DialogContent>
             <DialogActions>
               <Button
-                component={Link}
-                to="/"
+                // component={Link}
+                href="/"
                 variant="contained"
                 color="primary"
                 onClick={showHandler}
@@ -296,8 +298,8 @@ function CarNameSpace() {
                         </DialogContent>
                         <DialogActions>
                           <Button
-                            component={Link}
-                            to="/"
+                            // component={Link}
+                            href="/"
                             variant="contained"
                             color="primary"
                             onClick={showHandler}
@@ -332,8 +334,8 @@ function CarNameSpace() {
                         </DialogContent>
                         <DialogActions>
                           <Button
-                            component={Link}
-                            to="/"
+                            // component={Link}
+                            href="/"
                             variant="contained"
                             color="primary"
                             onClick={showHandler}
