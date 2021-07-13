@@ -15,6 +15,8 @@ import Register from "./components/Register";
 import { ThemeProvider } from "@material-ui/styles";
 import theme from "./store/theme";
 import Profile from "./components/Profile";
+import AboutUs from "./components/AboutUs";
+
 export default function App() {
   return (
     <main>
@@ -26,6 +28,7 @@ export default function App() {
             <Route exact path="/category">
               <Category />
             </Route>
+            <Route component={AboutUs} path='/about'/>
             {/* <Main/> */}
             <Route exact path="/profile">
               <Profile />
@@ -51,7 +54,7 @@ export default function App() {
             </Route>
           </Switch>
 
-          {/* <Footer /> */}
+          <Footer />
         </Provider>
       </ThemeProvider>
     </main>
