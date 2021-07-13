@@ -65,6 +65,7 @@ function CarNameSpace() {
           : setCategoryInto({});
         setLastPrice(response.data.data.startingPrice);
         setTimer(response.data.data.timer);
+        console.log(response.data.data);
       })
       .catch((err) => {
         setCategoryInto({});
@@ -82,9 +83,9 @@ function CarNameSpace() {
       });
     });
 
-    socket.on("users", (allUsers) => {
-      console.log(allUsers);
-      setTotalUser([...allUsers]);
+    socket.on("nihad", (data) => {
+      console.log(data.payload);
+      setTotalUser(data.payload);
     });
 
     socket.on("liveBid", (latest) => {
