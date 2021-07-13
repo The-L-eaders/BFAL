@@ -182,7 +182,11 @@ function Header() {
               Category
             </Typography>
           </Link>
-
+          <Link to="/about" className={classes.link}>
+            <Typography variant="button" onClick={handleMenuClose}>
+              About Us
+            </Typography>
+          </Link>
           <Typography
             className={classes.link}
             variant="button"
@@ -198,6 +202,11 @@ function Header() {
           </Link>
           <Link to="/register" className={classes.link}>
             <Typography variant="button">Register</Typography>
+          </Link>
+          <Link to="/about" className={classes.link}>
+            <Typography variant="button" onClick={handleMenuClose}>
+              About Us
+            </Typography>
           </Link>
         </>
       )}
