@@ -310,7 +310,7 @@ function CarNameSpace() {
       <div className="tableContainer">
         <div id="table-wrapper">
           <div class="chair left">
-            <div className={totalUser[0] ? "show" : "hide"}>
+            <div className={totalUser[0] ? "show" : "hide"} style={{fontSize: '40px'}}>
               {totalUser[0]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[0]?.userName ? (
                 <img
