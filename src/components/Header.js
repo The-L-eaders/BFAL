@@ -199,6 +199,11 @@ function Header() {
               Logout
             </Button>
           </Link>
+          <Link to="/about" className={classes.link}>
+            <Typography variant="button" onClick={handleMenuClose}>
+              About Us
+            </Typography>
+          </Link>
         </>
       ) : (
         <>
@@ -213,6 +218,11 @@ function Header() {
               <CreateOutlinedIcon />
               Register
             </Button>
+          </Link>
+          <Link to="/about" className={classes.link}>
+            <Typography variant="button" onClick={handleMenuClose}>
+              About Us
+            </Typography>
           </Link>
         </>
       )}

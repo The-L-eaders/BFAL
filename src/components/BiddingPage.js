@@ -64,6 +64,7 @@ function CarNameSpace() {
           : setCategoryInto({});
         setLastPrice(response.data.data.startingPrice);
         setTimer(response.data.data.timer);
+        console.log(response.data.data);
       })
       .catch((err) => {
         setCategoryInto({});
@@ -81,11 +82,13 @@ function CarNameSpace() {
       });
     });
 
-    socket.on("users", (allUsers) => {
-      console.log(allUsers);
-      setTotalUser([...allUsers]);
+    socket.on("nihad", (data) => {
+      console.log(data.payload,'???????????????');
+      setTotalUser(data.payload);
     });
-
+    socket.on('hi',(data)=>{
+      console.log(data,"hi work???");
+    })
     socket.on("liveBid", (latest) => {
       if (latest === 0 || latest === null) {
         latest = lastPrice;
@@ -308,8 +311,8 @@ function CarNameSpace() {
         <div id="table-wrapper">
           <div class="chair left">
             <div className={totalUser[0] ? "show" : "hide"}>
-              {totalUser[0]}
-              {showLatest.name === totalUser[0] ? (
+              {totalUser[0]?.userName}
+              {showLatest.name === totalUser[0]?.userName ? (
                 <img
                   className="bidingSign"
                   src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
@@ -322,8 +325,8 @@ function CarNameSpace() {
 
           <div class="chair left">
             <div className={totalUser[1] ? "show" : "hide"}>
-              {totalUser[1]}
-              {showLatest.name === totalUser[1] ? (
+              {totalUser[1]?.userName}
+              {showLatest.name === totalUser[1]?.userName ? (
                 <img
                   className="bidingSign"
                   src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
@@ -344,8 +347,8 @@ function CarNameSpace() {
         <div id="table-wrapper">
           <div class="chair left">
             <div className={totalUser[3] ? "show" : "hide"}>
-              {totalUser[3]}
-              {showLatest.name === totalUser[3] ? (
+              {totalUser[3]?.userName}
+              {showLatest.name === totalUser[3]?.userName ? (
                 <img
                   className="bidingSign"
                   src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
@@ -357,8 +360,8 @@ function CarNameSpace() {
           </div>
           <div class="chair left">
             <div className={totalUser[2] ? "show" : "hide"}>
-              {totalUser[2]}
-              {showLatest.name === totalUser[2] ? (
+              {totalUser[2]?.userName}
+              {showLatest.name === totalUser[2]?.userName ? (
                 <img
                   className="bidingSign"
                   src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
