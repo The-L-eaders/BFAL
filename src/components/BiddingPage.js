@@ -65,9 +65,14 @@ function CarNameSpace() {
           setErrorMessage(response.data.message);
           return;
         }
-        setCategoryInto(response.data.data)
-        setLastPrice(response.data.data.startingPrice);
-        setTimer(response.data.data.timer);
+        let body = response.data.data;
+        if(!body){
+          setErrorMessage("There is not products here");
+          return;
+        }
+        setCategoryInto(body);
+        setLastPrice(body.startingPrice);
+        setTimer(body.timer);
         setBodyLoading(false);
       })
       .catch((err) => {
@@ -194,7 +199,7 @@ function CarNameSpace() {
             </DialogActions>
           </Dialog>
         </div>)
-        : (
+        : categoryInfo ? (
           <div>
             <div className="container bg">
               <div className="screen">
@@ -428,7 +433,7 @@ function CarNameSpace() {
               </div>
             </div>
           </div>
-        )}
+        ) : []}
 
     </div>
   );
