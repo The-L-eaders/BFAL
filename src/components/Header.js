@@ -1,26 +1,28 @@
 import React from "react";
 import "./SASS/DarkMode.scss";
 import { Link } from "react-router-dom";
-import { alpha, makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import SearchIcon from "@material-ui/icons/Search";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import HomeIcon from "@material-ui/icons/Home";
 import clsx from "clsx";
 import Drawer from "@material-ui/core/Drawer";
-import Divider from "@material-ui/core/Divider";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import Button from "@material-ui/core/Button";
 import reactCookie from "react-cookies";
-import DarkModeToggle from "react-dark-mode-toggle";
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
+import MenuIcon from "@material-ui/icons/Menu";
+import PermIdentityIcon from "@material-ui/icons/PermIdentity";
+import AddBoxOutlinedIcon from "@material-ui/icons/AddBoxOutlined";
+import ClassOutlinedIcon from "@material-ui/icons/ClassOutlined";
+import MeetingRoomOutlinedIcon from "@material-ui/icons/MeetingRoomOutlined";
+import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
+import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -43,53 +45,35 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(1),
   },
+
   link: {
+    textAlign: "center",
     textDecoration: "none",
     cursor: "pointer",
+    width: "100%",
   },
+
+  btn: {
+    marginTop: "30%",
+    width: "100%",
+    content: "center",
+    border: "solid 2px #ad1457",
+    fontSizeAdjust: "0.58",
+  },
+
+  logoutBtn: {
+    marginTop: "30%",
+    width: "100%",
+    border: "solid 2px black",
+  },
+
   title: {
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
     },
   },
-  search: {
-    position: "relative",
-    borderRadius: theme.shape.borderRadius,
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    "&:hover": {
-      backgroundColor: alpha(theme.palette.common.white, 0.25),
-    },
-    marginRight: theme.spacing(2),
-    marginLeft: 0,
-    width: "100%",
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(3),
-      width: "auto",
-    },
-  },
-  searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  inputRoot: {
-    // color: "inherit",
-  },
-  inputInput: {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "20ch",
-    },
-  },
+
   sectionDesktop: {
     display: "none",
     [theme.breakpoints.up("md")]: {
@@ -103,10 +87,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   list: {
+    padding: "30px",
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "column",
     alignItems: "center",
+    backgroundColor: "#efefef",
+    height: "100%  ",
   },
   fullList: {
     width: "auto",
@@ -163,41 +150,69 @@ function Header() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
+      <img
+        src="https://freepngimg.com/thumb/auction/22904-7-auction-transparent-image-thumb.png"
+        className={classes.image}
+      />
       {reactCookie.load("token") ? (
         <>
           <Link to="/profile" className={classes.link}>
-            <Typography variant="button" onClick={handleMenuClose}>
+            <Button
+              variant="button"
+              className={classes.btn}
+              onClick={handleMenuClose}
+            >
+              <PermIdentityIcon />
               Profile
-            </Typography>
+            </Button>
           </Link>
 
           <Link to="/add" className={classes.link}>
-            <Typography variant="button" onClick={handleMenuClose}>
+            <Button
+              variant="button"
+              className={classes.btn}
+              onClick={handleMenuClose}
+            >
+              <AddBoxOutlinedIcon />
               Add Product
-            </Typography>
+            </Button>
           </Link>
 
           <Link to="/category" className={classes.link}>
-            <Typography variant="button" onClick={handleMenuClose}>
+            <Button
+              variant="button"
+              className={classes.btn}
+              onClick={handleMenuClose}
+            >
+              <ClassOutlinedIcon />
               Category
-            </Typography>
+            </Button>
           </Link>
 
-          <Typography
-            className={classes.link}
-            variant="button"
-            onClick={handleLogout}
-          >
-            Logout
-          </Typography>
+          <Link className={classes.link}>
+            <Button
+              variant="button"
+              className={classes.logoutBtn}
+              onClick={handleLogout}
+            >
+              <MeetingRoomOutlinedIcon />
+              Logout
+            </Button>
+          </Link>
         </>
       ) : (
         <>
           <Link to="/login" className={classes.link}>
-            <Typography variant="button">Login</Typography>
+            <Button variant="button" className={classes.btn}>
+              <ExitToAppOutlinedIcon />
+              Login
+            </Button>
           </Link>
           <Link to="/register" className={classes.link}>
-            <Typography variant="button">Register</Typography>
+            <Button variant="button" className={classes.btn}>
+              <CreateOutlinedIcon />
+              Register
+            </Button>
           </Link>
         </>
       )}
@@ -224,9 +239,8 @@ function Header() {
           aria-haspopup="true"
           color="inherit"
         >
-          <AccountCircle />
+          <MenuIcon />
         </IconButton>
-        <p>Profile</p>
       </MenuItem>
     </Menu>
   );
@@ -243,27 +257,25 @@ function Header() {
               Bid Fast & Last
             </Typography>
             <div className={classes.grow} />
-            {/* <DarkModeToggle
-              onChange={setIsDarkMode}
-              checked={isDarkMode}
-              size={40}
-            /> */}
+
             <div className={classes.sectionDesktop}>
               <Link to="/" className={classes.home}>
-                <MenuItem className={`${isDarkMode}`}>
+                <MenuItem>
                   <HomeIcon />
                 </MenuItem>
               </Link>
               <div>
                 {
-                  <React.Fragment key="bottom">
-                    <Button onClick={toggleDrawer("bottom", true)}>Menu</Button>
+                  <React.Fragment key="right">
+                    <Button onClick={toggleDrawer("right", true)}>
+                      <MenuIcon />
+                    </Button>
                     <Drawer
-                      anchor="bottom"
-                      open={state["bottom"]}
-                      onClose={toggleDrawer("bottom", false)}
+                      anchor="right"
+                      open={state["right"]}
+                      onClose={toggleDrawer("right", false)}
                     >
-                      {list("bottom")}
+                      {list("right")}
                     </Drawer>
                   </React.Fragment>
                 }

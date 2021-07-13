@@ -4,17 +4,21 @@ import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Grid from "@material-ui/core/Grid";
 import Card from "@material-ui/core/Card";
-import CardMedia from "@material-ui/core/CardMedia";
 import AddShoppingCartIcon from "@material-ui/icons/AddShoppingCart";
 import Typography from "@material-ui/core/Typography";
 import myCookie from "react-cookies";
 import { Paper } from "@material-ui/core";
 
+import Accordion from "@material-ui/core/Accordion";
+import AccordionSummary from "@material-ui/core/AccordionSummary";
+import AccordionDetails from "@material-ui/core/AccordionDetails";
+import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+
 import superAgent from "superagent";
 const useStyles = makeStyles((theme) => ({
   addCircle: {
-    marginTop: 80,
-    marginLeft: 60,
+    marginTop: 90,
+    marginLeft: 50,
     fontSize: 50,
     backgroundColor: "#ad1457",
     width: 190,
@@ -23,14 +27,11 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
   },
-  text: {},
-  text1: {
-    fontSize: "1em",
-  },
+
   root: {
     display: "block",
     marginLeft: 70,
-    width: "100%",
+    width: "80%",
   },
 
   card: {
@@ -38,37 +39,42 @@ const useStyles = makeStyles((theme) => ({
         0 6.7px 5.3px rgba(0, 0, 0, 0.048),
         0 12.5px 10px rgba(0, 0, 0, 0.06),
         0 50px 80px rgba(0, 0, 0, 0.12)`,
-    borderRadius: "10px",
-    border: "1px solid gray",
-    backgroundColor: "#EFEFEF",
-    borderBlockColor: "#3f51b5",
     marginTop: 2,
-    // maxHeight: 550,
     marginBottom: "2%",
-    // overflow: "auto",
     display: "flex",
     flexWrap: "wrap",
-    width: "90%",
+    width: "95%",
     margin: "auto",
+    backgroundColor: "#F0F0F0",
   },
 
   UserCard: {
     margin: "auto",
-    marginTop: 120,
+    marginTop: 150,
     textAlign: "center",
-    width: 450,
-    padding: "2%",
+    width: "90%",
+    padding: "1%",
+    backgroundColor: "#F0F0F0",
   },
 
-  products: {
-    marginLeft: "auto",
-    marginRight: "auto",
-    marginBottom: "2%",
+  heading: {
+    boxShadow: `0 20px 20px rgba(0, 0, 0, 0.12)`,
+    fontSize: theme.typography.pxToRem(20),
+    backgroundColor: "#FCECF1",
+  },
+
+  innerRoot: {
+    margin: "auto",
     marginTop: "2%",
-    padding: "10px",
-    width: "25%",
+    marginBottom: "2%",
+    width: "40%",
     textAlign: "center",
-    borderRadius: "20px",
+  },
+
+  text1: {
+    fontSize: "15px",
+    margin: "auto",
+    textAlign: "center",
   },
 }));
 
@@ -97,7 +103,7 @@ function Profile() {
             </div>
           </Grid>
           <Grid item xs={12} sm={9}>
-            <Paper elevation={10} className={style.UserCard}>
+            <Paper elevation={6} className={style.UserCard}>
               <Typography variant="h6" color="textSecondary">
                 User Name: {user.userName}
               </Typography>
@@ -132,73 +138,96 @@ function Profile() {
               {flag && user.product.length
                 ? user.product.map((product) => {
                     return (
-                      <Card className={style.products}>
-                        <CardMedia image={product.productImage} />
-                        <img
-                          src={product.productImage}
-                          width="200"
-                          height="200"
-                        />
-                        <Typography
-                          variant="h5"
-                          color="textSecondary"
-                          className={style.text1}
-                        >
-                          Product Name: {product.productName}
-                        </Typography>
-                        <Typography
-                          variant="h6"
-                          color="textSecondary"
-                          className={style.text1}
-                        >
-                          Product Starting Price: {product.startingPrice}$
-                        </Typography>
-                        <Typography
-                          variant="h6"
-                          color="textSecondary"
-                          className={style.text1}
-                        >
-                          Product's Status: {product.status}$
-                        </Typography>
-                      </Card>
+                      <div className={style.innerRoot}>
+                        <Accordion>
+                          <AccordionSummary
+                            className={style.heading}
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                          >
+                            <img
+                              src={product.productImage}
+                              width="200"
+                              height="200"
+                            />
+
+                            <Typography
+                              variant="p"
+                              color="textSecondary"
+                              className={style.text1}
+                            >
+                              Product Name
+                              <hr />
+                              {product.productName}
+                            </Typography>
+                          </AccordionSummary>
+
+                          <AccordionDetails>
+                            <Typography
+                              variant="h6"
+                              color="textSecondary"
+                              className={style.text1}
+                            >
+                              Product's Status: &nbsp; {product.status}
+                              <hr />
+                              Product Starting Price: &nbsp;
+                              {product.startingPrice}$
+                              <hr />
+                              Product Description: &nbsp;
+                              {product.description}
+                            </Typography>
+                          </AccordionDetails>
+                        </Accordion>
+                      </div>
                     );
                   })
-                : user.cart.length
-                ? user.cart.map((product) => {
+                : user.cart.map((product) => {
                     return (
-                      <Card className={style.products}>
-                        <CardMedia image={product.image} />
-                        <img
-                          src={product.productImage}
-                          width="200"
-                          height="200"
-                          marginTop="20px"
-                        />
-                        <Typography
-                          variant="h5"
-                          color="textSecondary"
-                          className={style.text1}
-                        >
-                          Product Name :{product.name}
-                        </Typography>
-                        <Typography
-                          variant="h6"
-                          color="textSecondary"
-                          className={style.text1}
-                        >
-                          Product Price :{product.price}
-                        </Typography>
-                        <Typography
-                          variant="h6"
-                          color="textSecondary"
-                          className={style.text1}
-                        >
-                          Product Description :{product.description}
-                        </Typography>
-                      </Card>
+                      <div className={style.innerRoot}>
+                        <Accordion>
+                          <AccordionSummary
+                            className={style.heading}
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                          >
+                            <img
+                              src={product.productImage}
+                              width="200"
+                              height="200"
+                            />
+
+                            <Typography
+                              variant="p"
+                              color="textSecondary"
+                              className={style.text1}
+                            >
+                              Product Name
+                              <hr />
+                              {product.productName}
+                            </Typography>
+                          </AccordionSummary>
+
+                          <AccordionDetails>
+                            <Typography
+                              variant="h6"
+                              color="textSecondary"
+                              className={style.text1}
+                            >
+                              Product's Status: &nbsp; {product.status}
+                              <hr />
+                              Product Starting Price: &nbsp;
+                              {product.startingPrice}$
+                              <hr />
+                              Product Description: &nbsp;
+                              {product.description}
+                            </Typography>
+                          </AccordionDetails>
+                        </Accordion>
+                      </div>
                     );
-                  })
-                : null}
+                  })}{" "}
             </Card>
           </Grid>
         </Grid>

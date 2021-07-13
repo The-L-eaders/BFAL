@@ -28,7 +28,6 @@ import {
   Typography,
 } from "@material-ui/core";
 
-// const ENDPOINT = "https://bid-fast-and-last.herokuapp.com/car";
 
 function CarNameSpace() {
   const history = useHistory();
@@ -102,8 +101,9 @@ function CarNameSpace() {
 
   const useStyles = makeStyles((theme) => ({
     button: {
-      backgroundColor: "#ad1457",
-      margin: 1,
+      backgroundColor: "#grey",
+      margin: 3,
+      width: "30%"
     },
   }));
 
@@ -146,100 +146,10 @@ function CarNameSpace() {
     return ret;
   }
 
-  // const container = document.querySelector(".container");
-  // const seats = document.querySelectorAll(".row .seat:not(.occupied)");
-  // const count = document.getElementById("count");
-  // const total = document.getElementById("total");
-  // const movieSelect = document.getElementById("movie");
-
-  // let ticketPrice = +movieSelect.value;
-
-  // //save Selected movie index and price
-  // function SelectedMovieData(movieIndex, moviePrice) {
-  //   localStorage.setItem("selectedMovieIndex", movieIndex);
-  //   localStorage.setItem("selectedMoviePrice", moviePrice);
-  // }
-
-  // //function update total and count
-  // function updateSelectedCount() {
-  //   const selectedSeats = document.querySelectorAll(".row .seat.selected");
-
-  //   const seatsIndex = [...selectedSeats].map((seat) =>
-  //     [...seats].indexOf(seat)
-  //   );
-  //   localStorage.setItem("selectesSeats", JSON.stringify(seatsIndex));
-
-  //   const selectedSeatsCount = selectedSeats.length;
-  //   count.innerText = selectedSeatsCount;
-  //   total.innerText = selectedSeatsCount * ticketPrice;
-  // }
-
-  // //movie select event
-  // movieSelect.addEventListener("change", (e) => {
-  //   ticketPrice = +e.target.value;
-  //   SelectedMovieData(e.target.selectedIndex, e.target.value);
-  //   updateSelectedCount();
-  // });
-
-  // container.addEventListener("click", function (e) {
-  //   if (
-  //     e.target.classList.contains("seat") &&
-  //     !e.target.classList.contains("occupied")
-  //   ) {
-  //     e.target.classList.toggle("selected");
-  //     updateSelectedCount();
-  //   }
-  // });
-  {
-    /* <div class="movie-container">
-  <label for="">Pick a movie</label>
-  <select id="movie">
-  <option value="10"> spiderman (10$) </option>
-  <option value="12"> joker (12$)</option>
-  <option value="9"> catch me if you can (9$)</option>
-  <option value="8"> lborto9ala lmora (8$)</option>
-  </select>
-</div> */
-  }
-
-  // <div className="seats">
-  // {totalUser.map((name) => {
-  //   return (
-  //     <div className="seat">
-  //       <div className="joinedUser">
-  //         {name}
-
-  //         {showLatest.name === name ? (
-  //           <img
-  //             src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
-  //             width="50px"
-  //             height="50px"
-  //           />
-  //         ) : null}
-  //       </div>
-  //     </div>
-  //   );
-  // })}
-  // </div>
-  // ;
-  // ) : {null}
 
   return (
     <div className="bg">
-      {/* <ul class="showcase">
-          <div class="seat"></div>
-        <li>
-          <small>N/A</small>
-        </li>
-        <li>
-          <div class="seat selected"></div>
-          <small>Selected</small>
-        </li>
-        <li>
-          <div class="seat occupied"></div>
-          <small>Occupied</small>
-        </li>
-      </ul> */}
+   
       <div className="container bg">
         <div class="screen">
           <If condition={timer > 0}>
@@ -250,7 +160,8 @@ function CarNameSpace() {
                   <Grid container spacing={2} justifyContent="space-between">
                     <Grid item xs={12} sm={6} md={4}>
                       <img
-                        width="400"
+                      className="productImage"
+                    
                         src={categoryInfo.productImage}
                         onClick={handelClick}
                       />
