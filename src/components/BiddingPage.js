@@ -83,7 +83,7 @@ function CarNameSpace() {
     });
 
     socket.on("nihad", (data) => {
-      console.log(data.payload,'???????????????');
+      console.log((data.payload[0].userName).charAt(0).toUpperCase(),'???????????????');
       setTotalUser(data.payload);
     });
     socket.on('hi',(data)=>{
@@ -311,7 +311,7 @@ function CarNameSpace() {
         <div id="table-wrapper">
           <div class="chair left">
             <div className={totalUser[0] ? "show" : "hide"}>
-              {totalUser[0]?.userName}
+              {totalUser[0]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[0]?.userName ? (
                 <img
                   className="bidingSign"
@@ -325,7 +325,7 @@ function CarNameSpace() {
 
           <div class="chair left">
             <div className={totalUser[1] ? "show" : "hide"}>
-              {totalUser[1]?.userName}
+              {totalUser[1]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[1]?.userName ? (
                 <img
                   className="bidingSign"
@@ -347,7 +347,7 @@ function CarNameSpace() {
         <div id="table-wrapper">
           <div class="chair left">
             <div className={totalUser[3] ? "show" : "hide"}>
-              {totalUser[3]?.userName}
+              {totalUser[3]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[3]?.userName ? (
                 <img
                   className="bidingSign"
@@ -360,7 +360,7 @@ function CarNameSpace() {
           </div>
           <div class="chair left">
             <div className={totalUser[2] ? "show" : "hide"}>
-              {totalUser[2]?.userName}
+              {totalUser[2]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[2]?.userName ? (
                 <img
                   className="bidingSign"
