@@ -215,13 +215,13 @@ function Header() {
       ) : (
         <>
           <Link to="/login" className={classes.link}>
-            <Button variant="button" className={classes.btn}>
+            <Button  className={classes.btn}>
               <ExitToAppOutlinedIcon />
               Login
             </Button>
           </Link>
           <Link to="/register" className={classes.link}>
-            <Button variant="button" className={classes.btn}>
+            <Button  className={classes.btn}>
               <CreateOutlinedIcon />
               Register
             </Button>

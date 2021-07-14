@@ -8,7 +8,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
-
+import superAgent from 'superagent';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -46,6 +46,14 @@ export default function RecipeReviewCard() {
         setCategories(response.data);
       })
       .catch((err) => { console.log(err.message) });
+ 
+    superAgent
+      .get("https://bid-fast-and-last.herokuapp.com/products")
+      .then((data) => {
+        setProduct(data.body);
+        console.log(data.body);
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   function handleShowCategory(name) {
