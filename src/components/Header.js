@@ -23,6 +23,7 @@ import ClassOutlinedIcon from "@material-ui/icons/ClassOutlined";
 import MeetingRoomOutlinedIcon from "@material-ui/icons/MeetingRoomOutlined";
 import CreateOutlinedIcon from "@material-ui/icons/CreateOutlined";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
+import PeopleOutlinedIcon from "@material-ui/icons/PeopleOutlined";
 
 const useStyles = makeStyles((theme) => ({
   image: {
@@ -189,6 +190,17 @@ function Header() {
             </Button>
           </Link>
 
+          <Link to="/about" className={classes.link}>
+            <Button
+              variant="button"
+              className={classes.btn}
+              onClick={handleMenuClose}
+            >
+              <PeopleOutlinedIcon />
+              About Us
+            </Button>
+          </Link>
+
           <Link className={classes.link}>
             <Button
               variant="button"
@@ -198,11 +210,6 @@ function Header() {
               <MeetingRoomOutlinedIcon />
               Logout
             </Button>
-          </Link>
-          <Link to="/about" className={classes.link}>
-            <Typography variant="button" onClick={handleMenuClose}>
-              About Us
-            </Typography>
           </Link>
         </>
       ) : (
@@ -220,9 +227,14 @@ function Header() {
             </Button>
           </Link>
           <Link to="/about" className={classes.link}>
-            <Typography variant="button" onClick={handleMenuClose}>
+            <Button
+              variant="button"
+              className={classes.btn}
+              onClick={handleMenuClose}
+            >
+              <PeopleOutlinedIcon />
               About Us
-            </Typography>
+            </Button>
           </Link>
         </>
       )}
@@ -269,11 +281,11 @@ function Header() {
             <div className={classes.grow} />
 
             <div className={classes.sectionDesktop}>
-              <Link to="/" className={classes.home}>
+              <a href="/" className={classes.home}>
                 <MenuItem>
                   <HomeIcon />
                 </MenuItem>
-              </Link>
+              </a>
               <div>
                 {
                   <React.Fragment key="right">

@@ -192,11 +192,7 @@ function Profile() {
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                           >
-                            <img
-                              src={product.productImage}
-                              width="200"
-                              height="200"
-                            />
+                            <img src={product.image} width="200" height="200" />
 
                             <Typography
                               variant="p"
@@ -205,7 +201,7 @@ function Profile() {
                             >
                               Product Name
                               <hr />
-                              {product.productName}
+                              {product.name}
                             </Typography>
                           </AccordionSummary>
 
@@ -215,10 +211,7 @@ function Profile() {
                               color="textSecondary"
                               className={style.text1}
                             >
-                              Product's Status: &nbsp; {product.status}
-                              <hr />
-                              Product Starting Price: &nbsp;
-                              {product.startingPrice}$
+                              Bought with: &nbsp; {product.price}
                               <hr />
                               Product Description: &nbsp;
                               {product.description}

@@ -15,7 +15,6 @@
     background-repeat: no-repeat;
     width: 120px;
     height: 100px;
-    // transform: rotate(180deg);
   }
 }
 
@@ -72,10 +71,10 @@
 
 .screen {
   margin: auto;
-  margin-top: 7%;
+  margin-top: 9%;
   background-color: #fff;
-  max-height: 320px;
-  max-width: 750px;
+  max-height: 30%;
+  max-width: 60%;
   transform: rotateX(-15deg);
   box-shadow: 0 3px 10px rgb(0, 0, 0);
 }
@@ -87,7 +86,7 @@ p.text span {
   color: rgb(36, 175, 209);
 }
 .tableContainer {
-  margin-top: 15%;
+  margin-top: 5%;
   display: flex;
   flex-wrap: wrap;
 }
