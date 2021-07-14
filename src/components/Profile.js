@@ -136,9 +136,9 @@ function Profile() {
           <Grid item xs={12} sm={9}>
             <Card className={style.card}>
               {flag && user.product.length
-                ? user.product.map((product) => {
+                ? user.product.map((product,idx) => {
                     return (
-                      <div className={style.innerRoot}>
+                      <div className={style.innerRoot} key={idx}>
                         <Accordion>
                           <AccordionSummary
                             className={style.heading}
@@ -153,7 +153,7 @@ function Profile() {
                             />
 
                             <Typography
-                              variant="p"
+                              variant="inherit"
                               color="textSecondary"
                               className={style.text1}
                             >
@@ -199,7 +199,7 @@ function Profile() {
                             />
 
                             <Typography
-                              variant="p"
+                              variant="inherit"
                               color="textSecondary"
                               className={style.text1}
                             >
