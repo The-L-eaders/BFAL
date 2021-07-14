@@ -9,9 +9,10 @@ function SettingsProvider(props) {
   const [lastPrice, setLastPrice] = useState(0);
   const [greeting, setGreeting] = useState("");
   const [showLatest, setShowLatest] = useState({});
-  const [totalUser ,setTotalUser] = useState([]);
-  const [userName,setUserName]=useState('');
-  
+  const [totalUser, setTotalUser] = useState([]);
+  const [userName, setUserName] = useState("");
+  const [noBidFlag, setNoBidFlag] = useState(true);
+
   const state = {
     product,
     setProduct,
@@ -23,10 +24,12 @@ function SettingsProvider(props) {
     setGreeting,
     showLatest,
     setShowLatest,
-    totalUser ,
+    totalUser,
     setTotalUser,
     userName,
-    setUserName
+    setUserName,
+    noBidFlag,
+    setNoBidFlag,
   };
   return (
     <BiddingContext.Provider value={state}>

@@ -12,7 +12,7 @@ const addProductReducer = (state = addProduct, action) => {
   let { type, payload } = action;
   switch (type) {
     case "GET":
-      console.log(payload,';;;;;;')
+      // console.log(payload,';;;;;;')
       if (payload) {
         return {
           ...state,

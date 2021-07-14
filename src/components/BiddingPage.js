@@ -32,6 +32,7 @@ function CarNameSpace() {
   const history = useHistory();
   const { name } = useParams();
   const [categoryInfo, setCategoryInto] = useState({});
+
   const ENDPOINT = `https://bid-fast-and-last.herokuapp.com/${name}`;
   const socket = socketIOClient(ENDPOINT);
   const {
@@ -47,6 +48,8 @@ function CarNameSpace() {
     setShowLatest,
     totalUser,
     setTotalUser,
+    noBidFlag,
+    setNoBidFlag,
   } = useContext(BiddingContext);
 
   const [errorMessage, setErrorMessage] = useState(false);
@@ -93,14 +96,15 @@ function CarNameSpace() {
           name: total.name,
           total: total.total,
         });
+        setNoBidFlag(false);
       });
 
       socket.on("nihad", (data) => {
-        console.log(data.payload, "???????????????");
+        // console.log(data.payload, "???????????????");
         setTotalUser(data.payload);
       });
       socket.on("hi", (data) => {
-        console.log(data, "hi work???");
+        // console.log(data, "hi work???");
       });
       socket.on("liveBid", (latest) => {
         if (latest === 0 || latest === null) {
@@ -288,77 +292,76 @@ function CarNameSpace() {
                   </Card>
                 </Then>
               </If>
-              <Else>
-                <If
-                  condition={timer === 0}
-                  condition={Object.keys(showLatest).length && timer === 0}
-                >
-                  <Then>
-                    <Dialog
-                      fullWidth={true}
-                      maxWidth="sm"
-                      open={open}
-                      aria-labelledby="max-width-dialog-title"
-                    >
-                      <DialogTitle id="max-width-dialog-title">
-                        congratulations !!
-                      </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          {`Congrats for ${showLatest.name}, you have bought this Product for ${showLatest.total}$`}
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          // component={Link}
-                          href="/"
-                          variant="contained"
-                          color="primary"
-                          onClick={showHandler}
-                        >
-                          Back
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </Then>
-                </If>
-              </Else>
-              <Else>
-                <If
-                  condition={timer === 0}
-                  condition={!Object.keys(showLatest).length && timer === 0}
-                >
-                  <Then>
-                    <Dialog
-                      fullWidth={true}
-                      maxWidth="sm"
-                      open={open}
-                      aria-labelledby="max-width-dialog-title"
-                    >
-                      <DialogTitle id="max-width-dialog-title">
-                        No one Bided !!
-                      </DialogTitle>
-                      <DialogContent>
-                        <DialogContentText>
-                          No one Bided on this product, please come back agin on
-                          another auction
-                        </DialogContentText>
-                      </DialogContent>
-                      <DialogActions>
-                        <Button
-                          // component={Link}
-                          href="/"
-                          variant="contained"
-                          color="primary"
-                          onClick={showHandler}
-                        >
-                          Back
-                        </Button>
-                      </DialogActions>
-                    </Dialog>
-                  </Then>
-                </If>
-              </Else>
+
+              <If
+                condition={timer === 0}
+                condition={Object.keys(showLatest).length && timer === 0}
+              >
+                <Then>
+                  <Dialog
+                    fullWidth={true}
+                    maxWidth="sm"
+                    open={open}
+                    aria-labelledby="max-width-dialog-title"
+                  >
+                    <DialogTitle id="max-width-dialog-title">
+                      congratulations !!
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        {`Congrats for ${showLatest.name}, you have bought this Product for ${showLatest.total}$`}
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        // component={Link}
+                        href="/"
+                        variant="contained"
+                        color="primary"
+                        onClick={showHandler}
+                      >
+                        Back
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Then>
+              </If>
+              <If
+                condition={timer === 0}
+                condition={
+                  !Object.keys(showLatest).length && timer === 0 && noBidFlag
+                }
+              >
+                <Then>
+                  <Dialog
+                    fullWidth={true}
+                    maxWidth="sm"
+                    open={open}
+                    aria-labelledby="max-width-dialog-title"
+                  >
+                    <DialogTitle id="max-width-dialog-title">
+                      No one Bided !!
+                    </DialogTitle>
+                    <DialogContent>
+                      <DialogContentText>
+                        No one Bided on this product, please come back agin on
+                        another auction
+                      </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                      <Button
+                        // component={Link}
+                        href="/"
+                        variant="contained"
+                        color="primary"
+                        onClick={showHandler}
+                      >
+                        Back
+                      </Button>
+                    </DialogActions>
+                  </Dialog>
+                </Then>
+              </If>
             </div>
           </div>
 

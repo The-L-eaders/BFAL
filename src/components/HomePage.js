@@ -185,7 +185,7 @@ function HomePage() {
       .get("https://bid-fast-and-last.herokuapp.com/products")
       .then((data) => {
         setProduct(data.body);
-        console.log(data.body);
+        // console.log(data.body);
       })
       .catch((e) => console.log(e));
   }, []);
