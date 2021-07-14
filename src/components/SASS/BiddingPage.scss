@@ -18,7 +18,6 @@
     background-repeat: no-repeat;
     width: 120px;
     height: 100px;
-    // transform: rotate(180deg);
   }
 }
 
@@ -75,10 +74,10 @@
 
 .screen {
   margin: auto;
-  margin-top: 7%;
+  margin-top: 9%;
   background-color: #fff;
-  max-height: 320px;
-  max-width: 750px;
+  max-height: 30%;
+  max-width: 60%;
   transform: rotateX(-15deg);
   box-shadow: 0 3px 10px rgb(0, 0, 0);
 }
@@ -90,7 +89,7 @@ p.text span {
   color: rgb(36, 175, 209);
 }
 .tableContainer {
-  margin-top: 15%;
+  margin-top: 5%;
   display: flex;
   flex-wrap: wrap;
 }
@@ -117,13 +116,17 @@ p.text span {
     height: 80px;
     border-radius: 50px;
     position: relative;
-
+    
     &:nth-child(1) {
       background-image: url("https://static.thenounproject.com/png/1393788-200.png");
       background-size: cover;
 
       left: 180px;
       transform: rotate(160deg);
+      
+.bidingSign {
+  transform: rotate(160deg);
+}
     }
     &:nth-child(2) {
       background-image: url("https://static.thenounproject.com/png/1393788-200.png");
@@ -131,12 +134,18 @@ p.text span {
       top: 79px;
       left: 10px;
       transform: rotate(90deg);
+      .bidingSign {
+        transform: rotate(160deg);
+      }
+     
     }
     &:nth-child(3) {
       background-image: url("https://static.thenounproject.com/png/1393788-200.png");
       background-size: cover;
       top: 150px;
       left: 160px;
+ 
+    
     }
     &:nth-child(4) {
       background-image: url("https://static.thenounproject.com/png/1393788-200.png");
@@ -144,24 +153,28 @@ p.text span {
       top: -79px;
       left: 311px;
       transform: rotate(-90deg);
+      .bidingSign {
+        transform: rotate(160deg);
+      }
+  
     }
   }
 }
 
 .show {
-  display: block;
+  // display: block;
+  position: absolute;
+  top: 7px;
+  left: 10px;
   background-color: #ad1457;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   text-align: center;
   border-radius: 50%;
-  transform: rotate(90deg);
+
 }
 
 .hide {
   display: none;
 }
 
-.bidingSign {
-  transform: rotate(20deg);
-}

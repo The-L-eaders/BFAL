@@ -28,7 +28,6 @@ import {
   Typography,
 } from "@material-ui/core";
 
-
 function CarNameSpace() {
   const history = useHistory();
   const { name } = useParams();
@@ -51,10 +50,9 @@ function CarNameSpace() {
   } = useContext(BiddingContext);
 
   const [errorMessage, setErrorMessage] = useState(false);
-  const [bodyLoading,setBodyLoading] = useState(true);
+  const [bodyLoading, setBodyLoading] = useState(true);
 
   useEffect(() => {
-
     if (!name) {
       history.push("/category");
       return;
@@ -66,7 +64,7 @@ function CarNameSpace() {
           return;
         }
         let body = response.data.data;
-        if(!body){
+        if (!body) {
           setErrorMessage("There is not products here");
           return;
         }
@@ -79,7 +77,6 @@ function CarNameSpace() {
         setErrorMessage("Internal server error !");
         setCategoryInto({});
       });
-
   }, []);
 
   useEffect(() => {
@@ -99,12 +96,12 @@ function CarNameSpace() {
       });
 
       socket.on("nihad", (data) => {
-        console.log(data.payload, '???????????????');
+        console.log(data.payload, "???????????????");
         setTotalUser(data.payload);
       });
-      socket.on('hi', (data) => {
+      socket.on("hi", (data) => {
         console.log(data, "hi work???");
-      })
+      });
       socket.on("liveBid", (latest) => {
         if (latest === 0 || latest === null) {
           latest = lastPrice;
@@ -117,14 +114,13 @@ function CarNameSpace() {
         setTimer(data);
       });
     }
-
-  }, [errorMessage,bodyLoading])
+  }, [errorMessage, bodyLoading]);
 
   const useStyles = makeStyles((theme) => ({
     button: {
       backgroundColor: "#grey",
       margin: 3,
-      width: "30%"
+      width: "30%",
     },
   }));
 
@@ -168,7 +164,6 @@ function CarNameSpace() {
   }
 
   return (
-
     <div className="bg bidding-page-warpper">
       {errorMessage ? (
         <div>
@@ -178,13 +173,9 @@ function CarNameSpace() {
             open={open}
             aria-labelledby="max-width-dialog-title"
           >
-            <DialogTitle id="max-width-dialog-title">
-              Opps !!
-            </DialogTitle>
+            <DialogTitle id="max-width-dialog-title">Opps !!</DialogTitle>
             <DialogContent>
-              <DialogContentText>
-                {errorMessage}
-              </DialogContentText>
+              <DialogContentText>{errorMessage}</DialogContentText>
             </DialogContent>
             <DialogActions>
               <Button
@@ -198,243 +189,272 @@ function CarNameSpace() {
               </Button>
             </DialogActions>
           </Dialog>
-        </div>)
-        : categoryInfo ? (
-          <div>
-            <div className="container bg">
-              <div className="screen">
-                <If condition={timer > 0}>
-                  <Then>
-                    <Card>
-                      <CardHeader title={categoryInfo.productName} />
-                      <CardContent>
-                        <Grid container spacing={2} justifyContent="space-between">
-                          <Grid item xs={12} sm={6} md={4}>
-                            <img
-                              className="productImage"
-
-                              src={categoryInfo.productImage}
-                              onClick={handelClick}
-                            />
-                            <input
-                              type="hidden"
-                              value={categoryInfo.startingPrice}
-                              id="startingPrice"
-                            />
-                            <input
-                              type="hidden"
-                              value={categoryInfo.timer}
-                              id="timer"
-                            />
-                            <p id="Description">{categoryInfo.productDis}</p>
-                            <CardActions disableSpacing className={classes.buttons}>
-                              <Box>
-                                <Button
-                                  variant="contained"
-                                  id="addFive"
-                                  className={classes.button}
-                                  onClick={() => {
-                                    addMoneyHandler(500);
-                                  }}
-                                >
-                                  500$
-                                </Button>
-                                <Button
-                                  variant="contained"
-                                  id="addTen"
-                                  className={classes.button}
-                                  onClick={() => {
-                                    addMoneyHandler(1000);
-                                  }}
-                                >
-                                  1000$
-                                </Button>
-                                <Button
-                                  variant="contained"
-                                  id="addTwen"
-                                  className={classes.button}
-                                  onClick={() => {
-                                    addMoneyHandler(2000);
-                                  }}
-                                >
-                                  2000$
-                                </Button>
-                              </Box>
-                            </CardActions>
-                          </Grid>
-
-                          <Grid item xs={12} sm={6} md={4}>
-                            <h2>greeting : {greeting}</h2>
-                            <h4>
-                              showLatest : {showLatest.name} {showLatest.total}
-                            </h4>
-                            <h5>lastPrice : {lastPrice}</h5>
-                            <input id="productId" value={product._id} type="hidden" />
-                            <Typography className={classes.time} color="secondary">
-                              {" "}
-                              {format(timer)}{" "}
-                              <Timer className={classes.timer} color="secondary" />{" "}
-                            </Typography>
-                          </Grid>
+        </div>
+      ) : categoryInfo ? (
+        <div>
+          <div className="container bg">
+            <div className="screen">
+              <If condition={timer > 0}>
+                <Then>
+                  <Card>
+                    <CardHeader title={categoryInfo.productName} />
+                    <CardContent>
+                      <Grid
+                        container
+                        spacing={2}
+                        justifyContent="space-between"
+                      >
+                        <Grid item xs={12} sm={6} md={4}>
+                          <img
+                            className="productImage"
+                            src={categoryInfo.productImage}
+                            onClick={handelClick}
+                          />
+                          <input
+                            type="hidden"
+                            value={categoryInfo.startingPrice}
+                            id="startingPrice"
+                          />
+                          <input
+                            type="hidden"
+                            value={categoryInfo.timer}
+                            id="timer"
+                          />
+                          <p id="Description">{categoryInfo.productDis}</p>
+                          <CardActions
+                            disableSpacing
+                            className={classes.buttons}
+                          >
+                            <Box>
+                              <Button
+                                variant="contained"
+                                id="addFive"
+                                className={classes.button}
+                                onClick={() => {
+                                  addMoneyHandler(500);
+                                }}
+                              >
+                                500$
+                              </Button>
+                              <Button
+                                variant="contained"
+                                id="addTen"
+                                className={classes.button}
+                                onClick={() => {
+                                  addMoneyHandler(1000);
+                                }}
+                              >
+                                1000$
+                              </Button>
+                              <Button
+                                variant="contained"
+                                id="addTwen"
+                                className={classes.button}
+                                onClick={() => {
+                                  addMoneyHandler(2000);
+                                }}
+                              >
+                                2000$
+                              </Button>
+                            </Box>
+                          </CardActions>
                         </Grid>
-                      </CardContent>
-                    </Card>
+
+                        <Grid item xs={12} sm={6} md={4}>
+                          <h2>greeting : {greeting}</h2>
+                          <h4>
+                            showLatest : {showLatest.name} {showLatest.total}
+                          </h4>
+                          <h5>lastPrice : {lastPrice}</h5>
+                          <input
+                            id="productId"
+                            value={product._id}
+                            type="hidden"
+                          />
+                          <Typography
+                            className={classes.time}
+                            color="secondary"
+                          >
+                            {" "}
+                            {format(timer)}{" "}
+                            <Timer
+                              className={classes.timer}
+                              color="secondary"
+                            />{" "}
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </CardContent>
+                  </Card>
+                </Then>
+              </If>
+              <Else>
+                <If
+                  condition={timer === 0}
+                  condition={Object.keys(showLatest).length && timer === 0}
+                >
+                  <Then>
+                    <Dialog
+                      fullWidth={true}
+                      maxWidth="sm"
+                      open={open}
+                      aria-labelledby="max-width-dialog-title"
+                    >
+                      <DialogTitle id="max-width-dialog-title">
+                        congratulations !!
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          {`Congrats for ${showLatest.name}, you have bought this Product for ${showLatest.total}$`}
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          // component={Link}
+                          href="/"
+                          variant="contained"
+                          color="primary"
+                          onClick={showHandler}
+                        >
+                          Back
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
                   </Then>
                 </If>
-                <Else>
-                  <If
-                    condition={timer === 0}
-                    condition={Object.keys(showLatest).length && timer === 0}
-                  >
-                    <Then>
-                      <Dialog
-                        fullWidth={true}
-                        maxWidth="sm"
-                        open={open}
-                        aria-labelledby="max-width-dialog-title"
-                      >
-                        <DialogTitle id="max-width-dialog-title">
-                          congratulations !!
-                        </DialogTitle>
-                        <DialogContent>
-                          <DialogContentText>
-                            {`Congrats for ${showLatest.name}, you have bought this Product for ${showLatest.total}$`}
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button
-                            // component={Link}
-                            href="/"
-                            variant="contained"
-                            color="primary"
-                            onClick={showHandler}
-                          >
-                            Back
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-                    </Then>
-                  </If>
-                </Else>
-                <Else>
-                  <If
-                    condition={timer === 0}
-                    condition={!Object.keys(showLatest).length && timer === 0}
-                  >
-                    <Then>
-                      <Dialog
-                        fullWidth={true}
-                        maxWidth="sm"
-                        open={open}
-                        aria-labelledby="max-width-dialog-title"
-                      >
-                        <DialogTitle id="max-width-dialog-title">
-                          No one Bided !!
-                        </DialogTitle>
-                        <DialogContent>
-                          <DialogContentText>
-                            No one Bided on this product, please come back agin on
-                            another auction
-                          </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                          <Button
-                            // component={Link}
-                            href="/"
-                            variant="contained"
-                            color="primary"
-                            onClick={showHandler}
-                          >
-                            Back
-                          </Button>
-                        </DialogActions>
-                      </Dialog>
-                    </Then>
-                  </If>
-                </Else>
-              </div>
-            </div>
-
-            <div className="tableContainer">
-              <div id="table-wrapper">
-                <div className="chair left">
-                  <div className={totalUser[0] ? "show" : "hide"}>
-                    {totalUser[0]?.userName}
-                    {showLatest.name === totalUser[0]?.userName ? (
-                      <img
-                        className="bidingSign"
-                        src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
-                        width="40px"
-                        height="40px"
-                      />
-                    ) : null}
-                  </div>
-                </div>
-
-                <div className="chair left">
-                  <div className={totalUser[1] ? "show" : "hide"}>
-                    {totalUser[1]?.userName}
-                    {showLatest.name === totalUser[1]?.userName ? (
-                      <img
-                        className="bidingSign"
-                        src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
-                        width="40px"
-                        height="40px"
-                      />
-                    ) : null}
-                  </div>
-                </div>
-
-                <div className="chair right"></div>
-
-                <div className="chair right"></div>
-
-                <div className="the-table"></div>
-              </div>
-
-              <div id="table-wrapper">
-                <div className="chair left">
-                  <div className={totalUser[3] ? "show" : "hide"}>
-                    {totalUser[3]?.userName}
-                    {showLatest.name === totalUser[3]?.userName ? (
-                      <img
-                        className="bidingSign"
-                        src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
-                        width="40px"
-                        height="40px"
-                      />
-                    ) : null}
-                  </div>
-                </div>
-                <div className="chair left">
-                  <div className={totalUser[2] ? "show" : "hide"}>
-                    {totalUser[2]?.userName}
-                    {showLatest.name === totalUser[2]?.userName ? (
-                      <img
-                        className="bidingSign"
-                        src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
-                        width="40px"
-                        height="40px"
-                      />
-                    ) : null}
-                  </div>
-                </div>
-                <div className="chair right"></div>
-                <div className="chair right"></div>
-                <div className="the-table"></div>
-              </div>
-
-              <div id="table-wrapper">
-                <div className="chair left"></div>
-                <div className="chair left"></div>
-                <div className="chair right"></div>
-                <div className="chair right"></div>
-                <div className="the-table"></div>
-              </div>
+              </Else>
+              <Else>
+                <If
+                  condition={timer === 0}
+                  condition={!Object.keys(showLatest).length && timer === 0}
+                >
+                  <Then>
+                    <Dialog
+                      fullWidth={true}
+                      maxWidth="sm"
+                      open={open}
+                      aria-labelledby="max-width-dialog-title"
+                    >
+                      <DialogTitle id="max-width-dialog-title">
+                        No one Bided !!
+                      </DialogTitle>
+                      <DialogContent>
+                        <DialogContentText>
+                          No one Bided on this product, please come back agin on
+                          another auction
+                        </DialogContentText>
+                      </DialogContent>
+                      <DialogActions>
+                        <Button
+                          // component={Link}
+                          href="/"
+                          variant="contained"
+                          color="primary"
+                          onClick={showHandler}
+                        >
+                          Back
+                        </Button>
+                      </DialogActions>
+                    </Dialog>
+                  </Then>
+                </If>
+              </Else>
             </div>
           </div>
-        ) : []}
 
+          <div className="tableContainer">
+            <div id="table-wrapper">
+              <div class="chair left">
+                <div
+                  className={totalUser[0] ? "show" : "hide"}
+                  style={{ fontSize: "40px" }}
+                >
+                  {totalUser[0]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[0]?.userName ? (
+                    <img
+                      className="bidingSign"
+                      src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                      width="40px"
+                      height="40px"
+                    />
+                  ) : null}
+                </div>
+              </div>
+
+              <div class="chair left">
+                <div
+                  className={totalUser[1] ? "show" : "hide"}
+                  style={{ fontSize: "40px" }}
+                >
+                  {totalUser[1]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[1]?.userName ? (
+                    <img
+                      className="bidingSign"
+                      src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                      width="40px"
+                      height="40px"
+                    />
+                  ) : null}
+                </div>
+              </div>
+
+              <div class="chair right"></div>
+
+              <div class="chair right"></div>
+
+              <div class="the-table"></div>
+            </div>
+
+            <div id="table-wrapper">
+              <div class="chair left">
+                <div
+                  className={totalUser[3] ? "show" : "hide"}
+                  style={{ fontSize: "40px" }}
+                >
+                  {totalUser[3]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[3]?.userName ? (
+                    <img
+                      className="bidingSign"
+                      src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                      width="40px"
+                      height="40px"
+                    />
+                  ) : null}
+                </div>
+              </div>
+              <div class="chair left">
+                <div
+                  className={totalUser[2] ? "show" : "hide"}
+                  style={{ fontSize: "40px" }}
+                >
+                  {totalUser[2]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[2]?.userName ? (
+                    <img
+                      className="bidingSign"
+                      src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                      width="40px"
+                      height="40px"
+                    />
+                  ) : null}
+                </div>
+              </div>
+              <div class="chair right"></div>
+              <div class="chair right"></div>
+              <div class="the-table"></div>
+            </div>
+
+            <div id="table-wrapper">
+              <div class="chair left"></div>
+              <div class="chair left"></div>
+              <div class="chair right"></div>
+              <div class="chair right"></div>
+              <div class="the-table"></div>
+            </div>
+          </div>
+        </div>
+      ) : (
+        []
+      )}
     </div>
   );
 }

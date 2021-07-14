@@ -1,28 +1,31 @@
-footer {
+.footer {
     width: 100%;
-    background-color: #ad1457;
-    padding-top: 30px;
+    border-top: rgb(63, 58, 58) solid 1px;
+    // box-shadow: 0 0 0 10px rgb(138, 129, 129);
     font-family: "Open Sans", sans-serif;
+    margin-top: 15%;
 }
 
 footer .column {
     width: 17%;
     display: inline-block;
     vertical-align: top;
-    padding: 10px;
+    padding: 1%;
+    margin-left: 2%;
 }
 
 footer .column .footer_title {
-    color: #fff;
+    color: rgb(0, 0, 0);
     font-size: 1em;
     font-weight: 700;
     cursor: default;
 }
 
 footer .column a {
+    // margin: 2%;
     text-decoration: none;
     display: block;
-    color: gray;
+    color: rgb(59, 56, 56);
     font-size: 0.9em;
     padding: 5px 0;
     font-weight: 400;
@@ -53,7 +56,7 @@ footer .column:nth-child(1) a:nth-child(5) {
 }
 
 footer .column:nth-child(1) .fa-facebook {
-    color: #3b5998;
+    color: #0051ff;
 }
 
 footer .column:nth-child(1) .fa-instagram {
@@ -65,11 +68,11 @@ footer .column:nth-child(1) .fa-twitter {
 }
 
 .sub-footer {
-    background: #1e1e1e;
+    background: #d62977;
     width: 100%;
     padding: 5px 0;
     text-align: center;
-    color: gray;
+    color: rgb(255, 255, 255);
     font-size: 12px;
 }
 

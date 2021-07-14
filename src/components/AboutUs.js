@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
         display: "flex",
         justifyContent: "center",
         flexWrap: "wrap",
-        marginTop: "3rem"
     },
     teamCard: {
         height: "18rem",
@@ -33,6 +32,7 @@ const useStyles = makeStyles((theme) => ({
         flexBasis: "40%",
         marginLeft:'1rem',
         marginRight:'1rem',
+        marginTop: "5%"
     },
     teamCardImage: {
         maxWidth: "15rem",
@@ -77,13 +77,13 @@ export default function AboutUs() {
     return (
         <article>
             <section className={classes.titleSection}>
-                <label className={classes.title}>About us</label>
+                       <div className={classes.title}>
+                        <label>OUR TEAM</label>
+                    </div>
             </section>
             <section className={classes.content}>
                 <section className={classes.subContentSection}>
-                    <div className={classes.subTitle}>
-                        <label>OUR TEAM</label>
-                    </div>
+            
 
                     <div className={classes.teamContent}>
                         <div className={classes.teamCard}>
