@@ -337,7 +337,19 @@ function CarNameSpace() {
             </div>
           </div>
 
-          <div class="chair right"></div>
+          <div class="chair right">
+          <div className={totalUser[4] ? "show" : "hide"}>
+              {totalUser[4]?.userName.charAt(0).toUpperCase()}
+              {showLatest.name === totalUser[4]?.userName ? (
+                <img
+                  className="bidingSign"
+                  src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                  width="40px"
+                  height="40px"
+                />
+              ) : null}
+            </div>
+          </div>
 
           <div class="chair right"></div>
 
@@ -346,9 +358,9 @@ function CarNameSpace() {
 
         <div id="table-wrapper">
           <div class="chair left">
-            <div className={totalUser[3] ? "show" : "hide"} style={{fontSize: '40px'}}>
-              {totalUser[3]?.userName.charAt(0).toUpperCase()}
-              {showLatest.name === totalUser[3]?.userName ? (
+            <div className={totalUser[6] ? "show" : "hide"}>
+              {totalUser[6]?.userName.charAt(0).toUpperCase()}
+              {showLatest.name === totalUser[6]?.userName ? (
                 <img
                   className="bidingSign"
                   src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
@@ -371,14 +383,50 @@ function CarNameSpace() {
               ) : null}
             </div>
           </div>
-          <div class="chair right"></div>
+          <div class="chair right">
+          <div className={totalUser[5] ? "show" : "hide"}>
+              {totalUser[5]?.userName.charAt(0).toUpperCase()}
+              {showLatest.name === totalUser[5]?.userName ? (
+                <img
+                  className="bidingSign"
+                  src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                  width="40px"
+                  height="40px"
+                />
+              ) : null}
+            </div>
+          </div>
           <div class="chair right"></div>
           <div class="the-table"></div>
         </div>
 
         <div id="table-wrapper">
-          <div class="chair left"></div>
-          <div class="chair left"></div>
+          <div class="chair left">
+          <div className={totalUser[3] ? "show" : "hide"}>
+              {totalUser[3]?.userName.charAt(0).toUpperCase()}
+              {showLatest.name === totalUser[3]?.userName ? (
+                <img
+                  className="bidingSign"
+                  src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                  width="40px"
+                  height="40px"
+                />
+              ) : null}
+            </div>
+          </div>
+          <div class="chair left">
+          <div className={totalUser[7] ? "show" : "hide"}>
+              {totalUser[7]?.userName.charAt(0).toUpperCase()}
+              {showLatest.name === totalUser[7]?.userName ? (
+                <img
+                  className="bidingSign"
+                  src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                  width="40px"
+                  height="40px"
+                />
+              ) : null}
+            </div>
+          </div>
           <div class="chair right"></div>
           <div class="chair right"></div>
           <div class="the-table"></div>
