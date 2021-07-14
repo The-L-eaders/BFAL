@@ -69,6 +69,8 @@ const useStyles = makeStyles((theme) => ({
   },
 
   title: {
+    fontFamily: 'Lobster',
+    fontSize: "2.5em",
     display: "none",
     [theme.breakpoints.up("sm")]: {
       display: "block",
