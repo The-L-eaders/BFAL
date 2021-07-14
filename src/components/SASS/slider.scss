@@ -4,12 +4,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 5%;
+    margin-top: 2%;
+    margin-bottom: 5%;
 
   }
   
   .image {
-    width: 350px;
+    width: 550px;
     height: 250px;
     border-radius: 10px;
   }
@@ -17,8 +18,8 @@
   .right-arrow {
     position: absolute;
     top: 50%;
-    right: 400px;
-    font-size: 3rem;
+    right: 480px;
+    font-size: 2.5rem;
     color: #000;
     z-index: 10;
     cursor: pointer;
@@ -28,8 +29,8 @@
   .left-arrow {
     position: absolute;
     top: 50%;
-    left: 400px;
-    font-size: 3rem;
+    left: 480px;
+    font-size: 2.5rem;
     color: #000;
     z-index: 10;
     cursor: pointer;
@@ -39,14 +40,19 @@
   .slide {
     opacity: 0;
     transition-duration: 1s ease;
-    // width: 75%;
-    // height: 2%;
-    // margin: 3%
   }
   
   .slide.active {
     opacity: 1;
     transition-duration: 1s;
     transform: scale(1.08);
+
+  }
+  .slider-tit{
+    margin-bottom: 1%;
+    font-size: 40px;
+    margin: 2%;
+    text-align: center ;
+    margin-top: 8%;
 
   }

@@ -83,7 +83,7 @@ function CarNameSpace() {
     });
 
     socket.on("nihad", (data) => {
-      console.log((data.payload[0].userName).charAt(0).toUpperCase(),'???????????????');
+      console.log(data.payload,'???????????????');
       setTotalUser(data.payload);
     });
     socket.on('hi',(data)=>{
@@ -324,7 +324,7 @@ function CarNameSpace() {
           </div>
 
           <div class="chair left">
-            <div className={totalUser[1] ? "show" : "hide"}>
+            <div className={totalUser[1] ? "show" : "hide"} style={{fontSize: '40px'}}>
               {totalUser[1]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[1]?.userName ? (
                 <img
@@ -346,7 +346,7 @@ function CarNameSpace() {
 
         <div id="table-wrapper">
           <div class="chair left">
-            <div className={totalUser[3] ? "show" : "hide"}>
+            <div className={totalUser[3] ? "show" : "hide"} style={{fontSize: '40px'}}>
               {totalUser[3]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[3]?.userName ? (
                 <img
@@ -359,7 +359,7 @@ function CarNameSpace() {
             </div>
           </div>
           <div class="chair left">
-            <div className={totalUser[2] ? "show" : "hide"}>
+            <div className={totalUser[2] ? "show" : "hide"} style={{fontSize: '40px'}}>
               {totalUser[2]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[2]?.userName ? (
                 <img
