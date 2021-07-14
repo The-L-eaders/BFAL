@@ -193,9 +193,12 @@ function HomePage() {
     <>
       <div className="backGroundImg"></div>
 
-      <SnackbarProvider maxSnack={5}>
+      <SnackbarProvider maxSnack={1}>
         <Announcements />
       </SnackbarProvider>
+
+
+
       <Typography variant="h4">
         {" "}
         Why to go to physical auction, while you can bid online ?
