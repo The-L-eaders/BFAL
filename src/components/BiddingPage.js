@@ -126,6 +126,12 @@ function CarNameSpace() {
       margin: 3,
       width: "30%",
     },
+    timer: {
+      fontSize: "1.2em",
+    },
+    time: {
+      fontSize: "3em",
+    },
   }));
 
   const classes = useStyles();
@@ -200,20 +206,25 @@ function CarNameSpace() {
             <div className="screen">
               <If condition={timer > 0}>
                 <Then>
-                  <Card>
-                    <CardHeader title={categoryInfo.productName} />
+                  <Card className="myCard">
                     <CardContent>
+                      <CardHeader
+                        title={categoryInfo.productName}
+                        className="productTitle"
+                      />
+
                       <Grid
                         container
                         spacing={2}
                         justifyContent="space-between"
                       >
-                        <Grid item xs={12} sm={6} md={4}>
+                        <Grid item xs={12} sm={4} md={4}>
                           <img
                             className="productImage"
                             src={categoryInfo.productImage}
                             onClick={handelClick}
                           />
+
                           <input
                             type="hidden"
                             value={categoryInfo.startingPrice}
@@ -224,57 +235,18 @@ function CarNameSpace() {
                             value={categoryInfo.timer}
                             id="timer"
                           />
-                          <p id="Description">{categoryInfo.productDis}</p>
                           <CardActions
                             disableSpacing
                             className={classes.buttons}
-                          >
-                            <Box>
-                              <Button
-                                variant="contained"
-                                id="addFive"
-                                className={classes.button}
-                                onClick={() => {
-                                  addMoneyHandler(500);
-                                }}
-                              >
-                                500$
-                              </Button>
-                              <Button
-                                variant="contained"
-                                id="addTen"
-                                className={classes.button}
-                                onClick={() => {
-                                  addMoneyHandler(1000);
-                                }}
-                              >
-                                1000$
-                              </Button>
-                              <Button
-                                variant="contained"
-                                id="addTwen"
-                                className={classes.button}
-                                onClick={() => {
-                                  addMoneyHandler(2000);
-                                }}
-                              >
-                                2000$
-                              </Button>
-                            </Box>
-                          </CardActions>
+                          ></CardActions>
                         </Grid>
 
-                        <Grid item xs={12} sm={6} md={4}>
-                          <h2>greeting : {greeting}</h2>
-                          <h4>
-                            showLatest : {showLatest.name} {showLatest.total}
-                          </h4>
-                          <h5>lastPrice : {lastPrice}</h5>
-                          <input
-                            id="productId"
-                            value={product._id}
-                            type="hidden"
-                          />
+                        <Grid item xs={12} sm={4} md={2}>
+                          Description:
+                          <p id="Description">{categoryInfo.productDis}</p>
+                        </Grid>
+
+                        <Grid item xs={12} sm={4} md={4}>
                           <Typography
                             className={classes.time}
                             color="secondary"
@@ -286,6 +258,49 @@ function CarNameSpace() {
                               color="secondary"
                             />{" "}
                           </Typography>
+
+                          <h4>
+                            Latest Bid: {showLatest.name} {showLatest.total} $
+                          </h4>
+                          <h5>Current Price: {lastPrice} $</h5>
+                          <input
+                            id="productId"
+                            value={product._id}
+                            type="hidden"
+                          />
+
+                          <Box>
+                            <Button
+                              variant="contained"
+                              id="addFive"
+                              className={classes.button}
+                              onClick={() => {
+                                addMoneyHandler(500);
+                              }}
+                            >
+                              500$
+                            </Button>
+                            <Button
+                              variant="contained"
+                              id="addTen"
+                              className={classes.button}
+                              onClick={() => {
+                                addMoneyHandler(1000);
+                              }}
+                            >
+                              1000$
+                            </Button>
+                            <Button
+                              variant="contained"
+                              id="addTwen"
+                              className={classes.button}
+                              onClick={() => {
+                                addMoneyHandler(2000);
+                              }}
+                            >
+                              2000$
+                            </Button>
+                          </Box>
                         </Grid>
                       </Grid>
                     </CardContent>

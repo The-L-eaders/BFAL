@@ -35,10 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   card: {
-    boxShadow: ` 0 2.8px 2.2px rgba(0, 0, 0, 0.034),
-        0 6.7px 5.3px rgba(0, 0, 0, 0.048),
-        0 12.5px 10px rgba(0, 0, 0, 0.06),
-        0 50px 80px rgba(0, 0, 0, 0.12)`,
+    boxShadow: `0 20px 10px rgba(0, 0, 0, 0.12)`,
     marginTop: 2,
     marginBottom: "2%",
     display: "flex",
