@@ -310,8 +310,8 @@ function CarNameSpace() {
       <div className="tableContainer">
         <div id="table-wrapper">
           <div class="chair left">
-            <div className={totalUser[0] ? "show" : "hide"}>
-              {totalUser[0]?.userName}
+            <div className={totalUser[0] ? "show" : "hide"} style={{fontSize: '40px'}}>
+              {totalUser[0]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[0]?.userName ? (
                 <img
                   className="bidingSign"
@@ -324,8 +324,8 @@ function CarNameSpace() {
           </div>
 
           <div class="chair left">
-            <div className={totalUser[1] ? "show" : "hide"}>
-              {totalUser[1]?.userName}
+            <div className={totalUser[1] ? "show" : "hide"} style={{fontSize: '40px'}}>
+              {totalUser[1]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[1]?.userName ? (
                 <img
                   className="bidingSign"
@@ -346,8 +346,8 @@ function CarNameSpace() {
 
         <div id="table-wrapper">
           <div class="chair left">
-            <div className={totalUser[3] ? "show" : "hide"}>
-              {totalUser[3]?.userName}
+            <div className={totalUser[3] ? "show" : "hide"} style={{fontSize: '40px'}}>
+              {totalUser[3]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[3]?.userName ? (
                 <img
                   className="bidingSign"
@@ -359,8 +359,8 @@ function CarNameSpace() {
             </div>
           </div>
           <div class="chair left">
-            <div className={totalUser[2] ? "show" : "hide"}>
-              {totalUser[2]?.userName}
+            <div className={totalUser[2] ? "show" : "hide"} style={{fontSize: '40px'}}>
+              {totalUser[2]?.userName.charAt(0).toUpperCase()}
               {showLatest.name === totalUser[2]?.userName ? (
                 <img
                   className="bidingSign"
