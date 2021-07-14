@@ -132,7 +132,7 @@ function CarNameSpace() {
 
   const handelClick = () => {
     socket.emit("startBidding", {
-      counter: 15,
+      counter: categoryInfo.timer,
       lastPrice: categoryInfo.startingPrice,
       text: myCookie.load("token"),
     });
