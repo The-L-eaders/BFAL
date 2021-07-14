@@ -400,7 +400,22 @@ function CarNameSpace() {
 
               <div class="chair right"></div>
 
-              <div class="chair right"></div>
+              <div class="chair right">
+                <div
+                  className={totalUser[6] ? "show" : "hide"}
+                  style={{ fontSize: "40px" }}
+                >
+                  {totalUser[6]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[6]?.userName ? (
+                    <img
+                      className="bidingSign"
+                      src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                      width="40px"
+                      height="40px"
+                    />
+                  ) : null}
+                </div>
+              </div>
 
               <div class="the-table"></div>
             </div>
@@ -408,11 +423,11 @@ function CarNameSpace() {
             <div id="table-wrapper">
               <div class="chair left">
                 <div
-                  className={totalUser[3] ? "show" : "hide"}
+                  className={totalUser[4] ? "show" : "hide"}
                   style={{ fontSize: "40px" }}
                 >
-                  {totalUser[3]?.userName.charAt(0).toUpperCase()}
-                  {showLatest.name === totalUser[3]?.userName ? (
+                  {totalUser[4]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[4]?.userName ? (
                     <img
                       className="bidingSign"
                       src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
@@ -439,15 +454,61 @@ function CarNameSpace() {
                 </div>
               </div>
               <div class="chair right"></div>
-              <div class="chair right"></div>
+              <div class="chair right">
+                <div
+                  className={totalUser[7] ? "show" : "hide"}
+                  style={{ fontSize: "40px" }}
+                >
+                  {totalUser[7]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[7]?.userName ? (
+                    <img
+                      className="bidingSign"
+                      src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                      width="40px"
+                      height="40px"
+                    />
+                  ) : null}
+                </div>
+              </div>
+
               <div class="the-table"></div>
             </div>
 
             <div id="table-wrapper">
               <div class="chair left"></div>
-              <div class="chair left"></div>
+              <div class="chair left">
+                <div
+                  className={totalUser[3] ? "show" : "hide"}
+                  style={{ fontSize: "40px" }}
+                >
+                  {totalUser[3]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[3]?.userName ? (
+                    <img
+                      className="bidingSign"
+                      src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                      width="40px"
+                      height="40px"
+                    />
+                  ) : null}
+                </div>
+              </div>
               <div class="chair right"></div>
-              <div class="chair right"></div>
+              <div class="chair right">
+                <div
+                  className={totalUser[5] ? "show" : "hide"}
+                  style={{ fontSize: "40px" }}
+                >
+                  {totalUser[5]?.userName.charAt(0).toUpperCase()}
+                  {showLatest.name === totalUser[5]?.userName ? (
+                    <img
+                      className="bidingSign"
+                      src="https://image.flaticon.com/icons/png/512/1543/1543570.png"
+                      width="40px"
+                      height="40px"
+                    />
+                  ) : null}
+                </div>
+              </div>
               <div class="the-table"></div>
             </div>
           </div>
