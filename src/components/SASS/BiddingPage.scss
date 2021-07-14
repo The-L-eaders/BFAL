@@ -1,5 +1,5 @@
-.bidding-page-warpper{
-  min-height: 65rem;
+.bidding-page-warpper {
+  // min-height: 65rem;
 }
 .seats {
   display: flex;
@@ -22,8 +22,9 @@
 }
 
 .productImage {
-  width: 20em;
-  height: 20em;
+  width: 15em;
+  height: 15em;
+  margin-left: 30%;
   object-fit: fill;
 }
 
@@ -38,11 +39,6 @@
   font-size: 14px;
   margin-left: 10px;
   padding: 5px 15px;
-}
-
-.container {
-  perspective: 1000px;
-  margin-bottom: 30px;
 }
 
 .showcase .seat:not(.occupied):hover {
@@ -72,14 +68,15 @@
   display: flex;
 }
 
+.myCard {
+  max-height: 21em;
+  margin-top: 13%;
+}
+
 .screen {
   margin: auto;
-  margin-top: 9%;
-  background-color: #fff;
-  max-height: 30%;
-  max-width: 60%;
-  transform: rotateX(-15deg);
-  box-shadow: 0 3px 10px rgb(0, 0, 0);
+  max-width: 50%;
+  box-shadow: rgba(61, 60, 60, 0.589) 1px 1px 20px;
 }
 
 p.text {
@@ -105,58 +102,54 @@ p.text span {
     background-position: center;
     position: absolute;
     border-radius: 50%;
-    left: 100px;
+    left: 170px;
     top: 100px;
-    height: 200px;
-    width: 200px;
+    height: 150px;
+    width: 150px;
     box-shadow: 0 10px 15pt rgba(0, 0, 0, 0.23), 0 3px 9pt rgba(0, 0, 0, 0.16);
   }
   .chair {
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     border-radius: 50px;
     position: relative;
-    
+
     &:nth-child(1) {
       background-image: url("https://static.thenounproject.com/png/1393788-200.png");
       background-size: cover;
 
-      left: 180px;
+      left: 200px;
       transform: rotate(160deg);
-      
-.bidingSign {
-  transform: rotate(160deg);
-}
+
+      .bidingSign {
+        transform: rotate(160deg);
+      }
     }
     &:nth-child(2) {
       background-image: url("https://static.thenounproject.com/png/1393788-200.png");
       background-size: cover;
-      top: 79px;
-      left: 10px;
+      top: 60px;
+      left: 90px;
       transform: rotate(90deg);
       .bidingSign {
         transform: rotate(160deg);
       }
-     
     }
     &:nth-child(3) {
       background-image: url("https://static.thenounproject.com/png/1393788-200.png");
       background-size: cover;
-      top: 150px;
-      left: 160px;
- 
-    
+      top: 120px;
+      left: 200px;
     }
     &:nth-child(4) {
       background-image: url("https://static.thenounproject.com/png/1393788-200.png");
       background-size: cover;
       top: -79px;
-      left: 311px;
+      left: 330px;
       transform: rotate(-90deg);
       .bidingSign {
         transform: rotate(160deg);
       }
-  
     }
   }
 }
@@ -167,14 +160,21 @@ p.text span {
   top: 7px;
   left: 10px;
   background-color: #ad1457;
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   text-align: center;
   border-radius: 50%;
-
 }
 
 .hide {
   display: none;
 }
 
+.productTitle {
+  text-align: center;
+}
+
+#Description {
+  text-align: center;
+  justify-content: center;
+}
