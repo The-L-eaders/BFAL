@@ -1,7 +1,5 @@
 # Bid Fast And Last
 
-
-
 ## Authors:
 
 <br />
@@ -14,8 +12,6 @@ Nihad Zeidan
 <br />
 Zakeyah Abu-Yassen
 
-
-
 ## Summary of first idea.
 
 <br />
@@ -24,27 +20,31 @@ Bid Fast and Last (BFAL), Auction application to buy and sell products.
 <br />
 Make auction process easier and more accessible, by providing real-time auction web-application. Allow users not only to buy products but to be able also to sell products.
 
-
-
-
 ## Minimum Viable Product (MVP) definition.
+
       What is the minimum required for you to present on your demo day?
+
 <br />
   -	Register and sign-in page
-  -	Choosing product page 
-  -	Form to offer products to sell
-  -	Authentication 
-  -	Network – page to see all announcement happening on the page 
-  - Profile page 
-  - Category Page 
-  - Bidding Page
 
+- Choosing product page
 
+- Form to offer products to sell
 
-## Heroku Deployment:
-[Bid Fast And Last](https://bid-fast-and-last.herokuapp.com/)
+- Authentication
 
+- Network – page to see all announcement happening on the page
 
+- Profile page
+
+- Category Page
+
+- Bidding Page
+
+## Back-End Repo:
+
+[Back-End](https://github.com/The-L-eaders/bid-fast-and-last)
 
 ## Netlify Deployment:
+
 [Bid Fast And Last](https://bidfast.netlify.app/)
