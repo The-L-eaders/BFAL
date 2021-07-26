@@ -1,7 +1,6 @@
 import React from "react";
 import myCookie from "react-cookies";
 import superAgent from "superagent";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
@@ -11,7 +10,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 
+import useStyles from "./Styles/Add-Products.js";
+
 function AddProduct() {
+  const classes = useStyles();
+
   const handelSubmit = (e) => {
     let data = {
       name: e.target.name.value,
@@ -31,43 +34,6 @@ function AddProduct() {
       })
       .catch((e) => console.log(e));
   };
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: 100,
-      marginBottom: 50,
-      display: "flex",
-      flexWrap: "wrap",
-      flexDirection: "column",
-      width: "60%",
-      margin: "auto",
-    },
-
-    form: {
-      marginTop: 20,
-      display: "flex",
-      flexWrap: "wrap",
-      flexDirection: "column",
-      "& > *": {
-        width: "60%",
-        margin: "auto",
-      },
-    },
-    input: {
-      padding: 10,
-    },
-    btn: {
-      marginTop: 20,
-      width: "30%",
-    },
-    title: {
-      textAlign: "center",
-      fontSize: "3em",
-      marginBottom: 20,
-    },
-  }));
-
-  const classes = useStyles();
 
   return (
     <div className={classes.root}>
