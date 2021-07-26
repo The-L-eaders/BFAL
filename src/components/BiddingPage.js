@@ -5,8 +5,7 @@ import { If, Then, Else } from "react-if";
 import superAgent from "superagent";
 import { BiddingContext } from "../contaxt/biddingContext";
 import { Link } from "react-router-dom";
-// import useStyles from "./bidComp-style";
-import { makeStyles } from "@material-ui/core";
+import useStyles from "./Styles/bidComp-style";
 import Timer from "@material-ui/icons/Timer";
 import { useParams, useHistory } from "react-router-dom";
 import { CategoryHelper } from "../api/CategoryHelper";
@@ -91,7 +90,6 @@ function CarNameSpace() {
       });
 
       socket.on("showLatest", (total) => {
-        // setLastPrice(total.total)
         setShowLatest({
           name: total.name,
           total: total.total,
@@ -100,11 +98,9 @@ function CarNameSpace() {
       });
 
       socket.on("nihad", (data) => {
-        // console.log(data.payload, "???????????????");
         setTotalUser(data.payload);
       });
       socket.on("hi", (data) => {
-        // console.log(data, "hi work???");
       });
       socket.on("liveBid", (latest) => {
         if (latest === 0 || latest === null) {
@@ -120,19 +116,7 @@ function CarNameSpace() {
     }
   }, [errorMessage, bodyLoading]);
 
-  const useStyles = makeStyles((theme) => ({
-    button: {
-      backgroundColor: "#grey",
-      margin: 3,
-      width: "30%",
-    },
-    timer: {
-      fontSize: "1.2em",
-    },
-    time: {
-      fontSize: "3em",
-    },
-  }));
+
 
   const classes = useStyles();
 

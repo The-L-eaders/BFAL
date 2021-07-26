@@ -1,13 +1,14 @@
 import React, { useContext } from "react";
 import superAgent from "superagent";
 import reactCookie from "react-cookies";
-import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { useHistory } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import { Typography } from "@material-ui/core";
 import { BiddingContext } from "../contaxt/biddingContext";
+
+import useStyles from "./Styles/LoginStyles.js";
 
 function LogIn() {
   const { setUserName } = useContext(BiddingContext);
@@ -28,42 +29,6 @@ function LogIn() {
       })
       .catch((e) => console.log(e));
   };
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: 100,
-      marginBottom: 50,
-      display: "flex",
-      flexWrap: "wrap",
-      flexDirection: "column",
-
-      width: "60%",
-      margin: "auto",
-    },
-
-    form: {
-      marginTop: 20,
-      display: "flex",
-      flexWrap: "wrap",
-      flexDirection: "column",
-      "& > *": {
-        width: "60%",
-        margin: "auto",
-      },
-    },
-    input: {
-      padding: 10,
-    },
-
-    btn: {
-      width: "30%",
-    },
-    title: {
-      textAlign: "center",
-      fontSize: "3em",
-      marginBottom: 20,
-    },
-  }));
 
   const classes = useStyles();
 
