@@ -39,7 +39,6 @@ function AddProduct() {
       display: "flex",
       flexWrap: "wrap",
       flexDirection: "column",
-
       width: "60%",
       margin: "auto",
     },
@@ -57,7 +56,6 @@ function AddProduct() {
     input: {
       padding: 10,
     },
-
     btn: {
       marginTop: 20,
       width: "30%",
